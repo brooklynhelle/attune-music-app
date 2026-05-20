@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "622660104571",
+    "project_id": "attune-6767",
+    "storage_bucket": "attune-6767.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622660104571:android:1f0bafeaf56c60a8d8cdde",
+        "android_client_info": {
+          "package_name": "com.example.attune"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcXc1w6yTdP1notAzHgRYCT6clE3F3ZVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

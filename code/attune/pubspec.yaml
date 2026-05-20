@@ -9,16 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  provider: ^6.1.2
+  firebase_core: ^2.27.0
+  firebase_auth: ^4.17.4
+  cloud_firestore: ^4.15.4
+  flutter_secure_storage: ^9.0.0
+  http: ^1.2.1
 
-# firebase backend - commented out bc idk
-#  firebase_core: ^2.27.0
-#  firebase_auth: ^4.17.4
-#  cloud_firestore: ^4.15.4
-
-# Spotify OAuth + API
-#  flutter_web_auth_2: ^3.1.2     # handles OAuth redirect
-#  http: ^1.2.1                   # REST calls to Spotify API
-#  flutter_secure_storage: ^9.0.0 # store Spotify tokens securely
 
 dev_dependencies:
   flutter_test:
@@ -28,4 +25,4 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/
+    - assets/images/ # we might not end up needing this
