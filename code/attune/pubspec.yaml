@@ -1,0 +1,31 @@
+name: attune
+description: "Find community at college through your music taste"
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+# firebase backend - commented out bc idk
+#  firebase_core: ^2.27.0
+#  firebase_auth: ^4.17.4
+#  cloud_firestore: ^4.15.4
+
+# Spotify OAuth + API
+#  flutter_web_auth_2: ^3.1.2     # handles OAuth redirect
+#  http: ^1.2.1                   # REST calls to Spotify API
+#  flutter_secure_storage: ^9.0.0 # store Spotify tokens securely
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
