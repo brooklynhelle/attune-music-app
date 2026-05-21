@@ -4,6 +4,7 @@ import 'models/user_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+// internationalizing shouldnt be that hard...
 
 void main() async {
   // ensures flutter framework is initialized
