@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 
 // The login screen where you log in
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _LoginScreenState extends State<LoginScreen> {
     
   // object for email that tracks what user enters into text field
   final _emailController = TextEditingController();
@@ -31,3 +31,5 @@ class _HomeScreenState extends State<HomeScreen> {
     return Placeholder();
   }
 }
+
+  

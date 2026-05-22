@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'models/user_model.dart';
 import 'providers/auth_provider.dart';
 import 'package:provider/provider.dart';
-import 'screens/home/home_screen.dart';
-import 'screens/auth/login_screen.dart'; 
+import 'screens/home_screen.dart';
+import 'screens/login_screen.dart'; 
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
