@@ -1,3 +1,4 @@
+import 'package:attune/screens/spotify_connect_screen.dart';
 import 'package:flutter/material.dart';
 import 'models/user_model.dart';
 import 'providers/auth_provider.dart';
@@ -8,11 +9,15 @@ import 'screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 // internationalizing shouldnt be that hard...
 
 void main() async {
   // ensures flutter framework is initialized
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: ".env");  
 
   // get firebase goin - await bc nothing can happen before this happens
   await Firebase.initializeApp( // connects app to Firebase project
@@ -40,9 +45,13 @@ class MainApp extends StatelessWidget {
           
           // i just learned this so there are definitely some bug
           builder: (context, auth, _) {
-            return auth.isAuthenticated
-            ? const HomeScreen()
-            : const LoginScreen();
+            if (auth.isAuthenticated && auth.isSpotifyConnected) {
+              return const HomeScreen();
+            } else if (auth.isAuthenticated && !auth.isSpotifyConnected) {
+              return const SpotifyConnectScreen();
+            } else {
+              return const LoginScreen();
+            }
           },
         ),
       ),

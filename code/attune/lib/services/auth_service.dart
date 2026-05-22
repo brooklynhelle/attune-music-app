@@ -83,4 +83,16 @@ class AuthService {
     
   }
 
+  // updates the user's Spotify ID and top genres.
+  // called after a successful Spotify login
+  Future<void> updateSpotifyData({
+    required String uid,
+    required String spotifyId,
+    required List<String> topGenres,
+  }) async {
+    await _db.collection('users').doc(uid).update({
+      'spotifyId': spotifyId,
+      'topGenres': topGenres,
+    });
+  }
 }
