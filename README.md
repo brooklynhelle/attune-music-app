@@ -7,3 +7,8 @@ Once you start adding things to the `code` and `docs` directories, delete the fi
 # Documentation
 You should delete everything in this file, and replace what's here with the sections and details required by final project assignment specification.
 
+
+Resources used:
+
+Getting set up with the Spotify API:
+https://vibe-studio.ai/insights/integrating-oauth2-pkce-flows-in-flutter-apps
