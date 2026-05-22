@@ -5,7 +5,7 @@ import '../models/user_model.dart';
 // Talks to Firebase Auth (to sign up/in/out)
 // handles Firebase Authentication and Firestore user doc creation. 
 // Nothing should call this except AuthProvider I'm pretty sure
-class AuthServices {
+class AuthService {
 
   // handles login/signup
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -66,6 +66,21 @@ class AuthServices {
   // async bc its making a network call
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  // goes to Firestore and returns the UserModel for the given uid
+  Future<UserModel?> fetchUser(String uid) async {
+    final doc = await _db.collection('users').doc(uid).get();
+    
+    // if the user doesnt exist, return null
+    if (!doc.exists) {
+      return null;
+    } 
+    // otherwise, return the user as a UserModel
+    else {
+      return UserModel.fromMap(uid, doc.data()!);
+    }
+    
   }
 
 }
