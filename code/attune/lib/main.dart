@@ -66,8 +66,7 @@ class MainApp extends StatelessWidget {
             } else if (auth.isAuthenticated && !auth.isSpotifyConnected) {
               return const SpotifyConnectScreen();
             } else {
-              //return const LoginScreen();
-              return const ProfileScreen();
+              return const LoginScreen();
             }
           },
         ),
