@@ -86,6 +86,11 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () => Navigator.pushNamed(context, '/signup'),
               child: Text(AppLocalizations.of(context)!.noAccount),
             ),
+            // test user bypass signin
+            TextButton(
+              onPressed: () => context.read<AuthProvider>().setTestUser(),
+              child: const Text('Skip login (dev only)'),
+            ),
           ],
         ),
       ),
