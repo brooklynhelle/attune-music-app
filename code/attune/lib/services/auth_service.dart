@@ -27,6 +27,11 @@ class AuthService {
     });
   }
 
+  // getter for the current user
+  Future<User?> getCurrentUser() async {
+    return _auth.currentUser;
+  }
+
   // self explanatory
   // async bc its making a network call
   Future<UserModel> signUp({
@@ -68,6 +73,11 @@ class AuthService {
 
     // AuthProvider will get the user via the auth state stream
     await _auth.signInWithEmailAndPassword(email: email, password: password);
+  }
+
+  // creates user so that firebase saves info so you can actually log in
+  Future<void> createUser(UserModel user) async {
+    await _db.collection('users').doc(user.uid).set(user.toMap());
   }
 
   // self explanatory
