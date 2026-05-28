@@ -75,6 +75,11 @@ class AuthService {
     await _auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
+  // creates user so that firebase saves info so you can actually log in
+  Future<void> createUser(UserModel user) async {
+    await _db.collection('users').doc(user.uid).set(user.toMap());
+  }
+
   // self explanatory
   // async bc its making a network call
   Future<void> signOut() async {

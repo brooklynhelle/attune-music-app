@@ -105,7 +105,17 @@ class AuthProvider extends ChangeNotifier {
       print('Current user: $firebaseUser');
       if (firebaseUser != null) {
         _currentUser = await _authService.fetchUser(firebaseUser.uid);
-        print('UserModel: $_currentUser');
+
+      if (_currentUser == null) {
+        _currentUser = UserModel(
+          uid: firebaseUser.uid,
+          email: firebaseUser.email ?? '',
+          username: firebaseUser.email?.split('@')[0] ?? 'user',
+        );
+        await _authService.createUser(_currentUser!);
+      }
+
+        print('UserModel fetched: $_currentUser');
         notifyListeners();
       }
       return true;

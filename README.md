@@ -6,11 +6,8 @@ Once you start adding things to the `code` and `docs` directories, delete the fi
 
 # Documentation
 
-
-
-
-
-
+I had to change the platform configuration to only be iOS, I previously had all of them selected. 
+It was causing issues with running the app so I changed it. If we wanna change it back just run flutterfire configure in terminal and choose this project, then override old changes
 
 # Resources
 
@@ -35,17 +32,70 @@ REFLECTION:
 I needed to learn about multi providers since the top search result for "How do I handle multiple providers in flutter" told me I should use MultiProvider
 
 CONSULTED: 
+https://vibe-studio.ai/insights/integrating-oauth2-pkce-flows-in-flutter-apps
 REFLECTION: 
+Getting set up with the Spotify API
 
 CONSULTED: 
+https://support.macincloud.com/support/solutions/articles/8000123702-resolving-xcode-unsupported-option-g-for-target-arm64-apple-ios10-0-error-on-macincloud-server
 REFLECTION: 
+I kept not being able to run the build anywhere so I pasted the error into google and this website told me how to edit my Podfile to fix it, which worked 
 
 CONSULTED: 
+https://medium.com/@crystalize0106/how-to-use-provider-context-read-watch-and-select-1e41938fdf62
 REFLECTION: 
+When setting up the login page and user authentication, I decided to use context.watch and what not to help me navigate the outcomes possible from prompting a user to sign in/out/up
+
+CONSULTED: 
+https://docs.flutter.dev/ui/internationalization
+REFLECTION: 
+I learned about how to internationalize my code, as well as what that even means, from the flutter docs beofre implementing the necessary changes
+
+CONSULTED: 
+https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Fdocs.flutter.dev%2Fui&ved=0CAYQ1fkOahcKEwiQiIfD3NqUAxUAAAAAHQAAAAAQEw&opi=89978449
+https://docs.flutter.dev/cookbook/navigation/navigation-basics
+REFLECTION: 
+I consulted these when learning about how to get the UI to switch screens based on the auth state
+
+CONSULTED: 
+REFLECTION:
+
+CONSULTED: 
+REFLECTION:
+
+CONSULTED: 
+REFLECTION:
+
+CONSULTED: 
+REFLECTION:
+
+CONSULTED: 
+REFLECTION:
+
+CONSULTED: 
+REFLECTION:
+
+CONSULTED: 
+REFLECTION:
+
+CONSULTED: 
+REFLECTION:
+
+CONSULTED: 
+REFLECTION:
+
+CONSULTED: 
+REFLECTION:
+
+CONSULTED: 
+REFLECTION:
+
+
 
 
 # attune
 
+<<<<<<< Updated upstream
 Hi Brooklyn 
 
 Resources used:
@@ -69,3 +119,6 @@ https://api.flutter.dev/flutter/widgets/NeverScrollableScrollPhysics-class.html
 
 For the nav bar:
 https://api.flutter.dev/flutter/widgets/BottomNavigationBarItem-class.html
+=======
+Hi Brooklyn 
+>>>>>>> Stashed changes
