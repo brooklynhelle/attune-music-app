@@ -61,8 +61,30 @@ class AuthProvider extends ChangeNotifier {
 
   // signs user in using the authentication service 
   // with password and username given, of course
-  Future<void> signIn({required String email, required String password}) async {
-    await _authService.signIn(email: email, password: password);
+  // returns a bool so we know if login was successful
+  Future<bool> signIn({required String email, required String password}) async {
+    try {
+      // if login succeeds, no issues yay
+      await _authService.signIn(email: email, password: password);
+      return true;
+    } catch (e) {
+      // if the login was unsuccessful, notify listeners and return false
+      // so error message can display & user can try again
+      _hasError = true;
+      notifyListeners();
+      return false;
+    }
+  }
+
+  // updates user's location, like after permissions are enabled
+  Future<void> updateLocation(double lat, double long) async {
+    if (_currentUser == null) return;
+    await _authService.updateLocation(_currentUser!.uid, lat, long);
+    _currentUser!.latitude = lat;
+    _currentUser!.longitude = long;
+    notifyListeners(); 
+    // any widget watching AuthProvider and displaying location-based info 
+    // needs to know so they can rebuild  
   }
 
   // signs user in using the authentication service 
@@ -72,13 +94,11 @@ class AuthProvider extends ChangeNotifier {
     required String email,
     required String password,
     required String username,
-    required String university,
   }) async {
     return await _authService.signUp(
       email: email,
       password: password,
       username: username,
-      university: university, // we might wanna do geolocation instead of this
     );
   }
 }

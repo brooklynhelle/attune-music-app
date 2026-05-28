@@ -4,9 +4,15 @@ import 'providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart'; 
+import 'screens/signup_screen.dart'; 
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'l10n/app_localizations.dart';
+
+import 'providers/position_provider.dart';
 
 // internationalizing shouldnt be that hard...
 
@@ -31,9 +37,18 @@ class MainApp extends StatelessWidget {
     // useful for managing multiple providers (we're gonna have a lot highkey)
     return MultiProvider( 
       providers: [
+        // authentication provider
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        // geolocation provider
+        ChangeNotifierProvider(create: (_) => PositionProvider()),
       ],
       child: MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        routes: {
+          '/login': (_) => const LoginScreen(),
+          '/signup': (_) => const SignupScreen(),
+        },
         home: Consumer<AuthProvider>(
           // builder's params: context, auth (actual AuthProvider instance so state can be read), 
           // and _ is the child widget but we're not using it yet so the people on stackOverflow just put _

@@ -2,48 +2,64 @@ import 'package:flutter/material.dart';
 import '../providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
+import '../providers/position_provider.dart';
 
 
 // The login screen where you sign in, bare bones rn 
 // Should navigate to home screen when complete
 // Also has button that should navigate to sign up page; "no account? Sign up"
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
     
   // object for email that tracks what user enters into text field
   final _emailController = TextEditingController();
 
+  // object for username that tracks what user enters into text field
+  final _usernameController = TextEditingController();
+
   // object for password that tracks what user enters into text field
   final _passwordController = TextEditingController();
 
-  // nullable message that shows up if login failed
+  // nullable message that shows up if registering account failed
   String? _errorMessage;
 
   // dispose to avoid memory leaks and what not
   @override
   void dispose() {
     _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
   Future<void> _submit() async {
-    final success = await context.read<AuthProvider>().signIn(
+    final user = await context.read<AuthProvider>().signUp(
       email: _emailController.text.trim(),
       password: _passwordController.text,
+      username: _usernameController.text,
     );
-    // if the login failed & the wigdet is still on the screen, let user know and try again
-    if (!success && mounted) {
-      setState(() {
-        _errorMessage = AppLocalizations.of(context)!.loginFailed;
-      });
+    if (user != null) {
+      // trigger location permission request - add note: app is pointless w/o location enabled
+      try {
+        await context.read<PositionProvider>().determinePosition();
+      } catch (e) {
+        // user denied location - app still runs, just doesn't show nearby users... erm
+        // this is here so the app doesnt crash if user denies permissions
+      }
+      
     }
+    // if the sign up failed & the wigdet is still on the screen, let user know and try again
+    if (user == null && mounted) { // mounted == widget is still on screen (safety check)
+      setState(() {
+        _errorMessage = AppLocalizations.of(context)!.signupFailed;
+      });
+    } 
   }
 
   @override 
@@ -61,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: AppLocalizations.of(context)!.email
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 24), // spacing
             TextField(
               controller: _passwordController,
               obscureText: true,
@@ -69,10 +85,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: AppLocalizations.of(context)!.password
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 24), // spacing
+            TextField(
+              controller: _usernameController,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.username
+              ),
+            ),
+            const SizedBox(height: 24), // spacing
             ElevatedButton(
               onPressed: _submit,
-              child: Text(AppLocalizations.of(context)!.signIn),
+              child: Text(AppLocalizations.of(context)!.signUp),
             ),
             if (_errorMessage != null) 
               Text(
@@ -82,8 +105,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             TextButton(
-              onPressed: () => Navigator.pushNamed(context, '/signup'),
-              child: Text(AppLocalizations.of(context)!.noAccount),
+              onPressed: () => Navigator.pushNamed(context, '/login'),
+              child: Text(AppLocalizations.of(context)!.alreadyHaveAccount),
             ),
           ],
         ),

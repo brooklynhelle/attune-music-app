@@ -11,23 +11,20 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
     
-  // object for email that tracks what user enters into text field
-  final _emailController = TextEditingController();
-
-  // object for password that tracks what user enters into text field
-  final _passwordController = TextEditingController();
 
   // dispose to avoid memory leaks and what not
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
   @override 
   Widget build(BuildContext context) {
-    // UI
-    return Placeholder();
+      // UI
+    return Scaffold(
+      body: Center(
+        child: Text('Home Screen'),
+      ),
+    );
   }
 }
