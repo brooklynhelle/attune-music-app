@@ -1,14 +1,11 @@
 // holds everything to do with User that Firebase's user doesn't contain:
-// university, topGenres, spotifyID, displayName
+// topGenres, spotifyID, displayName, location
 
 // fields are public bc we need them like everywhere. maybe they shouldn't be?
 class UserModel {
 
   // the user's uid (unique ID that firebase gives every user)
   final String uid;
-
-  // the user's university
-  final String university;
 
   // the user's username
   final String username;
@@ -22,14 +19,21 @@ class UserModel {
   // the user's spotify ID, null until user connects their spotify
   final String? spotifyId;
 
+  // user's latitude - geolocation element, not final bc user moves around 
+  double? latitude;
+
+  // user's longitude - geolocation element, not final bc user moves around 
+  double? longitude;
+
   // constructs a user with the given info (do i have to list out all the fields?)
-  const UserModel({
+  UserModel({
     required this.uid,
-    required this.university, // we might wanna do geolocation instead of this
     required this.username,
     required this.email,
     this.topGenres = const [],
     this.spotifyId,
+    this.latitude,
+    this.longitude,
   });
 
   // write data to Firestore; must be sent out as a "map"
@@ -37,10 +41,11 @@ class UserModel {
     return {
       'email': email,
       'username': username,
-      'university': university,
       // 'uid': uid, // this will become the DOC ID, shouldnt be here
       'topGenres': topGenres, 
       'spotifyId': spotifyId,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 
@@ -52,9 +57,10 @@ class UserModel {
       uid: uid,
       email: map['email'],
       username: map['username'],
-      university: map['university'],
       topGenres: List<String>.from(map['topGenres'] ?? []), 
       spotifyId: map['spotifyId'],
+      latitude: map['latitude'] as double?,
+      longitude: map['longitude'] as double?,
     );
   }
 

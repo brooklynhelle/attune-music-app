@@ -1,0 +1,12 @@
+{
+  "signIn": "Sign in",
+  "noAccount": "No account? Sign up here",
+  "email": "Email",
+  "password": "Password",
+  "loginFailed": "Login failed, try again after checking email and password",
+  "signUp": "Sign up",
+  "username": "Username",
+  "alreadyHaveAccount": "Already have an account? Sign in",
+  "noAccount": "Don't have an account? Sign up here",
+  "signupFailed": "Unable to create account, please try again"
+}
