@@ -1,3 +1,4 @@
+import 'package:attune/services/spotify_auth.dart';
 import 'package:flutter/foundation.dart';
 import '../services/auth_service.dart';
 import '../models/user_model.dart';
@@ -9,6 +10,9 @@ class AuthProvider extends ChangeNotifier {
   // instance of AuthService to do stuff with
   final AuthService _authService = AuthService();
 
+  // instance of SpotifyAuth to get Spotify data with
+  final SpotifyAuth _spotifyAuth = SpotifyAuth();
+
   // are we waiting on a network call to finish?
   bool _dataLoading = false; 
 
@@ -18,6 +22,11 @@ class AuthProvider extends ChangeNotifier {
   // the current user; nullable bc no user when app first loads
   UserModel? _currentUser;
 
+  // Spotify data
+  SpotifyUser? _spotifyUser;
+  List<SpotifyArtist> _topArtists = [];
+  List<SpotifyTrack> _topTracks = [];
+  List<String> _topGenres = [];
 
   // getters since fields are private (dont need one for authService bc thats the
   // point of the provider)
@@ -34,6 +43,21 @@ class AuthProvider extends ChangeNotifier {
   // returns whether or not the current user is authenticated 
   // --> should the program show the home vs login screen
   bool get isAuthenticated => _currentUser != null;
+
+  // returns whether or not spotify is connected
+  bool get isSpotifyConnected => _spotifyAuth.isConnected;
+
+  // returns user's Spotify profile
+  SpotifyUser? get spotifyUser => _spotifyUser;
+
+  // returns the user's top Spotify artists
+  List<SpotifyArtist> get topArtists => _topArtists;
+
+  // returns the user's top Spotify tracks
+  List<SpotifyTrack> get topTracks => _topTracks;
+
+  // returns the user's top Spotify genres
+  List<String> get topGenres => _topGenres;
 
   // provider for authentication
   // This updates _currentUser according to auth state changes (someone signs up/in/out)
@@ -56,6 +80,11 @@ class AuthProvider extends ChangeNotifier {
 
   // signs user out using the authentication service 
   Future<void> signOut() async {
+    _spotifyAuth.logout();
+    _spotifyUser = null;
+    _topArtists = [];
+    _topTracks = [];
+    _topGenres = [];
     await _authService.signOut();
   }
 
@@ -100,5 +129,68 @@ class AuthProvider extends ChangeNotifier {
       password: password,
       username: username,
     );
+  }
+
+  // launches Spotify OAuth login, then gets top artists/tracks/genres
+  // this gets called after the user has signed up
+  Future<void> connectSpotify() async {
+    try {
+      _dataLoading = true;
+      _hasError = false;
+      notifyListeners();
+
+      // OAuth login → returns Spotify profile
+      _spotifyUser = await _spotifyAuth.login();
+
+      // gets top music data
+      final results = await Future.wait([
+        _spotifyAuth.fetchTopArtists(),
+        _spotifyAuth.fetchTopTracks(),
+        _spotifyAuth.fetchTopGenres(),
+      ]);
+
+      _topArtists = results[0] as List<SpotifyArtist>;
+      _topTracks = results[1] as List<SpotifyTrack>;
+      _topGenres = results[2] as List<String>;
+
+      // save Spotify Id and genres back to Firestore user doc
+      if (_currentUser != null) {
+        await _authService.updateSpotifyData(
+          uid: _currentUser!.uid,
+          spotifyId: _spotifyUser!.id,
+          topGenres: _topGenres,
+        );
+        _currentUser = await _authService.fetchUser(_currentUser!.uid);
+      }
+    } catch (e) {
+      _hasError = true;
+    } finally {
+      _dataLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // refreshes top artists/tracks/genres from Spotify
+  Future<void> refreshSpotifyData() async {
+    if (!_spotifyAuth.isConnected) return;
+    try {
+      _dataLoading = true;
+      notifyListeners();
+
+      final results = await Future.wait([
+        _spotifyAuth.fetchTopArtists(),
+        _spotifyAuth.fetchTopTracks(),
+        _spotifyAuth.fetchTopGenres(),
+      ]);
+
+      _topArtists = results[0] as List<SpotifyArtist>;
+      _topTracks = results[1] as List<SpotifyTrack>;
+      _topGenres = results[2] as List<String>;
+    } catch (e) {
+      _hasError = true;
+    } finally {
+      _dataLoading = false;
+      notifyListeners();
+    }
   }
 }

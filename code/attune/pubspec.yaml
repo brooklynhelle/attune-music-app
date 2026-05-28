@@ -34,4 +34,5 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
+    - .env
     - assets/images/ # we might not end up needing this
