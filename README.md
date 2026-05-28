@@ -69,3 +69,8 @@ https://api.flutter.dev/flutter/widgets/NeverScrollableScrollPhysics-class.html
 
 For the nav bar:
 https://api.flutter.dev/flutter/widgets/BottomNavigationBarItem-class.html
+
+To let the user view and scroll through their friends:
+https://api.flutter.dev/flutter/material/showModalBottomSheet.html
+
+//

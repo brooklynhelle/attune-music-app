@@ -33,6 +33,12 @@ class UserModel {
   // user's longitude - geolocation element, not final bc user moves around
   double? longitude;
 
+  // the user's friends
+  List<String> friends;
+
+  // the user's friend requests
+  List<String> friendRequests;
+
   // constructs a user with the given info (do i have to list out all the fields?)
   UserModel({
     required this.uid,
@@ -45,6 +51,8 @@ class UserModel {
     this.spotifyId,
     this.latitude,
     this.longitude,
+    this.friends = const [],
+    this.friendRequests = const [],
   });
 
   // write data to Firestore; must be sent out as a "map"
@@ -60,6 +68,8 @@ class UserModel {
       'spotifyId': spotifyId,
       'latitude': latitude,
       'longitude': longitude,
+      'friends': friends,
+      'friendRequests': friendRequests,
     };
   }
 
@@ -78,6 +88,8 @@ class UserModel {
       spotifyId: map['spotifyId'],
       latitude: map['latitude'] as double?,
       longitude: map['longitude'] as double?,
+      friends: List<String>.from(map['friends'] ?? []),
+      friendRequests: List<String>.from(map['friendRequests'] ?? []),
     );
   }
 }

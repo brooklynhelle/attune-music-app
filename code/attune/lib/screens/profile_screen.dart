@@ -60,6 +60,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   auth.currentUser!.bio!,
                   style: const TextStyle(fontSize: 15),
                 ),
+
+              // friends button
+              const SizedBox(height: 15),
+              ElevatedButton(
+                onPressed: () {
+                  final friends = context.read<AuthProvider>().currentUser?.friends ?? [];
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (_) => friends.isEmpty
+                      ? const Center(child: Text('No friends yet'))
+                      : ListView.builder(
+                        itemCount: friends.length,
+                        itemBuilder: (_, index) => ListTile(
+                          title: Text(friends[index]),
+                        ),
+                      ),
+                  );
+                },
+                child: const Text('Friends'),
+              ),
+
               // displaying top artists
               const SizedBox(height: 25),
               Text(

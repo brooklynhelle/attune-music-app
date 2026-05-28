@@ -1,4 +1,5 @@
 import 'package:attune/screens/main_screen.dart';
+import 'package:attune/screens/profile_screen.dart';
 import 'package:attune/screens/spotify_connect_screen.dart';
 import 'package:flutter/material.dart';
 import 'providers/auth_provider.dart';
@@ -65,7 +66,8 @@ class MainApp extends StatelessWidget {
             } else if (auth.isAuthenticated && !auth.isSpotifyConnected) {
               return const SpotifyConnectScreen();
             } else {
-              return const LoginScreen();
+              //return const LoginScreen();
+              return const ProfileScreen();
             }
           },
         ),
