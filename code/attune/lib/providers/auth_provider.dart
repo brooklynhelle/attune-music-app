@@ -123,6 +123,7 @@ class AuthProvider extends ChangeNotifier {
     required String email,
     required String password,
     required String username,
+    String university = '',
   }) async {
     return await _authService.signUp(
       email: email,
@@ -192,5 +193,16 @@ class AuthProvider extends ChangeNotifier {
       _dataLoading = false;
       notifyListeners();
     }
+  }
+
+  // updates the user's profile picture URL and refreshes the current user
+  Future<void> updatePfp(String pfp) async {
+    if (_currentUser == null) return;
+    await _authService.updatePfp(
+      uid: _currentUser!.uid,
+      pfp: pfp,
+    );
+    _currentUser = await _authService.fetchUser(_currentUser!.uid);
+    notifyListeners();
   }
 }

@@ -1,6 +1,5 @@
 {
   "signIn": "Sign in",
-  "noAccount": "No account? Sign up here",
   "email": "Email",
   "password": "Password",
   "loginFailed": "Login failed, try again after checking email and password",
@@ -8,5 +7,7 @@
   "username": "Username",
   "alreadyHaveAccount": "Already have an account? Sign in",
   "noAccount": "Don't have an account? Sign up here",
-  "signupFailed": "Unable to create account, please try again"
+  "signupFailed": "Unable to create account, please try again",
+  "topArtists": "Top Artists",
+  "topTracks": "Top Tracks"
 }

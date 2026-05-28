@@ -50,5 +50,22 @@ Hi Brooklyn
 
 Resources used:
 
-Getting set up with the Spotify API:
-https://vibe-studio.ai/insights/integrating-oauth2-pkce-flows-in-flutter-apps
+Most of the code regarding the Spotify API is reused from a
+project I worked on earlier this year. I made sure it was okay
+to do this with an Ed post.
+
+To help make the user's profile picture:
+https://api.flutter.dev/flutter/material/CircleAvatar-class.html
+https://api.flutter.dev/flutter/material/TextField-class.html
+
+Used this to make the name and bio boxes for the profile page:
+https://api.flutter.dev/flutter/widgets/SizedBox-class.html
+
+Used these to display top artists and tracks:
+https://api.flutter.dev/flutter/widgets/ListView-class.html
+https://api.flutter.dev/flutter/material/ListTile-class.html
+https://api.flutter.dev/flutter/widgets/ScrollView/shrinkWrap.html
+https://api.flutter.dev/flutter/widgets/NeverScrollableScrollPhysics-class.html
+
+For the nav bar:
+https://api.flutter.dev/flutter/widgets/BottomNavigationBarItem-class.html

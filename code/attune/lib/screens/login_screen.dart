@@ -34,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> _submit() async {
+    print('submit called');
     final success = await context.read<AuthProvider>().signIn(
       email: _emailController.text.trim(),
       password: _passwordController.text,

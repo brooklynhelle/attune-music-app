@@ -33,6 +33,7 @@ class AuthService {
     required String username,
     required String password,
     required String email,
+    String university = '',
     List<String> topGenres = const [],
     String? spotifyId,
     }) async {
@@ -100,6 +101,16 @@ class AuthService {
     await _db.collection('users').doc(uid).update({
       'spotifyId': spotifyId,
       'topGenres': topGenres,
+    });
+  }
+
+  // updates the user's profile picture URL in firestore
+  Future<void> updatePfp({
+    required String uid,
+    required String pfp,
+  }) async {
+    await _db.collection('users').doc(uid).update({
+      'pfp': pfp,
     });
   }
 }

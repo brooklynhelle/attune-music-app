@@ -1,10 +1,11 @@
+import 'package:attune/screens/main_screen.dart';
 import 'package:attune/screens/spotify_connect_screen.dart';
 import 'package:flutter/material.dart';
 import 'providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
-import 'screens/login_screen.dart'; 
-import 'screens/signup_screen.dart'; 
+import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -24,8 +25,10 @@ void main() async {
   await dotenv.load(fileName: ".env");
 
   // get firebase goin - await bc nothing can happen before this happens
-  await Firebase.initializeApp( // connects app to Firebase project
-    options: DefaultFirebaseOptions.currentPlatform, // configs for platform (iOS for us)
+  await Firebase.initializeApp(
+    // connects app to Firebase project
+    options: DefaultFirebaseOptions
+        .currentPlatform, // configs for platform (iOS for us)
   );
   runApp(const MainApp());
 }
@@ -37,7 +40,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // useful for managing multiple providers (we're gonna have a lot highkey)
-    return MultiProvider( 
+    return MultiProvider(
       providers: [
         // authentication provider
         ChangeNotifierProvider(create: (_) => AuthProvider()),
@@ -52,13 +55,13 @@ class MainApp extends StatelessWidget {
           '/signup': (_) => const SignupScreen(),
         },
         home: Consumer<AuthProvider>(
-          // builder's params: context, auth (actual AuthProvider instance so state can be read), 
+          // builder's params: context, auth (actual AuthProvider instance so state can be read),
           // and _ is the child widget but we're not using it yet so the people on stackOverflow just put _
-          
+
           // i just learned this so there are definitely some bug
           builder: (context, auth, _) {
             if (auth.isAuthenticated && auth.isSpotifyConnected) {
-              return const HomeScreen();
+              return const MainScreen();
             } else if (auth.isAuthenticated && !auth.isSpotifyConnected) {
               return const SpotifyConnectScreen();
             } else {

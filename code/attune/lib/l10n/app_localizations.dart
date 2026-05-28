@@ -100,12 +100,6 @@ abstract class AppLocalizations {
   /// **'Sign in'**
   String get signIn;
 
-  /// No description provided for @noAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Don\'t have an account? Sign up here'**
-  String get noAccount;
-
   /// No description provided for @email.
   ///
   /// In en, this message translates to:
@@ -142,11 +136,29 @@ abstract class AppLocalizations {
   /// **'Already have an account? Sign in'**
   String get alreadyHaveAccount;
 
+  /// No description provided for @noAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? Sign up here'**
+  String get noAccount;
+
   /// No description provided for @signupFailed.
   ///
   /// In en, this message translates to:
   /// **'Unable to create account, please try again'**
   String get signupFailed;
+
+  /// No description provided for @topArtists.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Artists'**
+  String get topArtists;
+
+  /// No description provided for @topTracks.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Tracks'**
+  String get topTracks;
 }
 
 class _AppLocalizationsDelegate

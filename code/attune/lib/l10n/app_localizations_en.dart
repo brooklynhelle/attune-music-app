@@ -12,9 +12,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signIn => 'Sign in';
 
   @override
-  String get noAccount => 'Don\'t have an account? Sign up here';
-
-  @override
   String get email => 'Email';
 
   @override
@@ -34,5 +31,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get alreadyHaveAccount => 'Already have an account? Sign in';
 
   @override
+  String get noAccount => 'Don\'t have an account? Sign up here';
+
+  @override
   String get signupFailed => 'Unable to create account, please try again';
+
+  @override
+  String get topArtists => 'Top Artists';
+
+  @override
+  String get topTracks => 'Top Tracks';
 }
