@@ -69,11 +69,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCAAMPEBr1hkKj7-mpY5622hWFln9hpMgU',
-    appId: '1:622660104571:ios:9e7b984417f48da5d8cdde',
+    appId: '1:622660104571:ios:302d5912361f29e5d8cdde',
     messagingSenderId: '622660104571',
     projectId: 'attune-6767',
     storageBucket: 'attune-6767.firebasestorage.app',
-    iosBundleId: 'com.example.attune',
+    iosBundleId: 'com.penacoat.attune',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(

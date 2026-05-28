@@ -27,6 +27,11 @@ class AuthService {
     });
   }
 
+  // getter for the current user
+  Future<User?> getCurrentUser() async {
+    return _auth.currentUser;
+  }
+
   // self explanatory
   // async bc its making a network call
   Future<UserModel> signUp({

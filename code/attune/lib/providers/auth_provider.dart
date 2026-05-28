@@ -66,6 +66,7 @@ class AuthProvider extends ChangeNotifier {
   AuthProvider() {
     _authService.authStateChanges.listen((user) async {
       // if no user exists yet/login fails, current user is null
+      print('Auth state changed: $user');
       if (user == null) {
         _currentUser = null;
       } 
@@ -94,16 +95,41 @@ class AuthProvider extends ChangeNotifier {
   Future<bool> signIn({required String email, required String password}) async {
     try {
       // if login succeeds, no issues yay
+      print('Attempting sign in with: $email');
       await _authService.signIn(email: email, password: password);
+      print('Sign in successful');
+
+      // signing in wouldnt work until I manually updated the currentUser this way instead of
+      // relying on firebase to actually work
+      final firebaseUser = await _authService.getCurrentUser();
+      print('Current user: $firebaseUser');
+      if (firebaseUser != null) {
+        _currentUser = await _authService.fetchUser(firebaseUser.uid);
+        print('UserModel: $_currentUser');
+        notifyListeners();
+      }
       return true;
     } catch (e) {
       // if the login was unsuccessful, notify listeners and return false
       // so error message can display & user can try again
+      print('Sign in error: $e');
       _hasError = true;
       notifyListeners();
       return false;
     }
   }
+
+  // hardcoded test user bc we can't get firebase to work with user auth
+  void setTestUser() {
+  _currentUser = UserModel(
+    uid: 'test-uid',
+    email: 'test@test.com',
+    username: 'testuser',
+    latitude: 47.6553,   // UW Seattle coordinates
+    longitude: -122.3035,
+  );
+  notifyListeners();
+}
 
   // updates user's location, like after permissions are enabled
   Future<void> updateLocation(double lat, double long) async {
@@ -124,11 +150,24 @@ class AuthProvider extends ChangeNotifier {
     required String password,
     required String username,
   }) async {
-    return await _authService.signUp(
-      email: email,
-      password: password,
-      username: username,
+    try {
+      final user = await _authService.signUp(
+        email: email,
+        password: password,
+        username: username,
     );
+    // set current user if signup was successful
+    _currentUser = user;
+    notifyListeners();
+    return user;
+    } // otherwise, error 
+    catch (e, stackTrace) {
+      _hasError = true;
+      print('Signup error: $e');
+      print('Stack trace: $stackTrace');
+      notifyListeners();
+      return null;
+    }
   }
 
   // launches Spotify OAuth login, then gets top artists/tracks/genres
