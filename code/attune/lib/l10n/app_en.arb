@@ -22,5 +22,6 @@
   "nearby": "Nearby: ",
   "locationDisabled": "Enable location sharing to see other users near you",
   "allAlone": "No users within 20 miles",
-  "signOut": "Sign out"
+  "signOut": "Sign out",
+  "requestSent": "Request Sent"
 }

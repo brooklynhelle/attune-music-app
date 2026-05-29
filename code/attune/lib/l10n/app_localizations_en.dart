@@ -81,4 +81,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get signOut => 'Sign out';
+
+  @override
+  String get requestSent => 'Request Sent';
 }
