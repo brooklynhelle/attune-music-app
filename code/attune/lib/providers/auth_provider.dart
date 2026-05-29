@@ -206,6 +206,7 @@ class AuthProvider extends ChangeNotifier {
           uid: _currentUser!.uid,
           spotifyId: _spotifyUser!.id,
           topGenres: _topGenres,
+          topArtists: _topArtists.map((a) => a.name).toList(),
         );
         _currentUser = await _authService.fetchUser(_currentUser!.uid);
       }
@@ -285,4 +286,14 @@ class AuthProvider extends ChangeNotifier {
     _currentUser = await _authService.fetchUser(_currentUser!.uid);
     notifyListeners();
   }
+
+  // // search for users by username
+  // Future<List<UserModel>> searchUsers(String query) async {
+  //   return await _authService.searchUsers(query);
+  // }
+
+  // // search for artists
+  // Future<List<UserModel>> searchUsersByArtist(String artist) async {
+  //   return await _authService.searchUsersByArtist(artist);
+  // }
 }
