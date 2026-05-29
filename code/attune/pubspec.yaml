@@ -25,6 +25,7 @@ dependencies:
   geolocator: ^13.0.0
   image_picker: ^1.0.0
   firebase_storage: ^12.0.0
+  uni_links_desktop: ^0.1.1
   
 
 dev_dependencies:
@@ -37,4 +38,3 @@ flutter:
   uses-material-design: true
   assets:
     - .env
-    - assets/images/ # we might not end up needing this

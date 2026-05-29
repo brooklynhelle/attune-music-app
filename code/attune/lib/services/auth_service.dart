@@ -89,7 +89,6 @@ class AuthService {
   // goes to Firestore and returns the UserModel for the given uid
   Future<UserModel?> fetchUser(String uid) async {
     final doc = await _db.collection('users').doc(uid).get();
-    
     // if the user doesnt exist, return null
     if (!doc.exists) {
       return null;

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:attune/screens/main_screen.dart';
 import 'package:attune/screens/profile_screen.dart';
 import 'package:attune/screens/spotify_connect_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:uni_links_desktop/uni_links_desktop.dart';
 import 'providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'screens/home_screen.dart';
@@ -24,6 +27,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: ".env");
+
+  if (Platform.isMacOS) {
+    registerProtocol('attune');
+  }
+
 
   // get firebase goin - await bc nothing can happen before this happens
   await Firebase.initializeApp(

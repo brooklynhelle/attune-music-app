@@ -66,7 +66,6 @@ class AuthProvider extends ChangeNotifier {
   AuthProvider() {
     _authService.authStateChanges.listen((user) async {
       // if no user exists yet/login fails, current user is null
-      print('Auth state changed: $user');
       if (user == null) {
         _currentUser = null;
       } 
