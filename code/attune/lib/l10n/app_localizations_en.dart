@@ -65,4 +65,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profilePictureUrl => 'Profile picture URL';
+
+  @override
+  String get errorLoadingUsers => 'Error loading nearby users: ';
+
+  @override
+  String get nearby => 'Nearby: ';
+
+  @override
+  String get locationDisabled =>
+      'Enable location sharing to see other users near you';
+
+  @override
+  String get allAlone => 'No users within 20 miles';
 }

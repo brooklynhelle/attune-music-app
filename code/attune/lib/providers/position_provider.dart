@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
+import '../providers/auth_provider.dart';
+
 
 // This is the PositionProvider class from Food Finder. 
 // Provides user's location, if permissions are given. 
@@ -12,6 +14,10 @@ class PositionProvider extends ChangeNotifier {
     
     double _latitude = 0.0;
     double _longitude = 0.0;
+
+    // reference to AuthProvider so we can write a user's location to 
+    // firestore whenever we get an update from the GPS API
+    AuthProvider? _authProvider;
 
     // whether positional data has been loaded or not
     bool posKnown = false;
@@ -32,6 +38,12 @@ class PositionProvider extends ChangeNotifier {
     return false;
   }
 
+  // this is here so we can call it from main to connect position provider to auth provider
+  // bc we need to bc we have the location and also we need auth and then firestore to know abt it
+  void setAuthProvider(AuthProvider auth) {
+    _authProvider = auth;
+  }
+
   // getter for latitude except I remember dart syntax now
   double get latitude => _latitude;
 
@@ -46,6 +58,7 @@ class PositionProvider extends ChangeNotifier {
         _latitude = position.latitude;
         _longitude = position.longitude;
         posKnown = true;
+        _authProvider?.updateLocation(_latitude, _longitude);
         notifyListeners();
 
       }).catchError((_) {
@@ -61,6 +74,7 @@ class PositionProvider extends ChangeNotifier {
         _latitude = position.latitude;
         _longitude = position.longitude;
         posKnown = true;
+        _authProvider?.updateLocation(_latitude, _longitude);
         notifyListeners();
 
       }).catchError((_) {

@@ -207,6 +207,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile picture URL'**
   String get profilePictureUrl;
+
+  /// No description provided for @errorLoadingUsers.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading nearby users: '**
+  String get errorLoadingUsers;
+
+  /// No description provided for @nearby.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby: '**
+  String get nearby;
+
+  /// No description provided for @locationDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable location sharing to see other users near you'**
+  String get locationDisabled;
+
+  /// No description provided for @allAlone.
+  ///
+  /// In en, this message translates to:
+  /// **'No users within 20 miles'**
+  String get allAlone;
 }
 
 class _AppLocalizationsDelegate

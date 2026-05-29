@@ -53,9 +53,17 @@ class MainApp extends StatelessWidget {
       providers: [
         // authentication provider
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        // geolocation provider
-        ChangeNotifierProvider(create: (_) => PositionProvider()),
+
+        // geolocation provider — use AuthProvider to update location
+        ChangeNotifierProxyProvider<AuthProvider, PositionProvider>(
+          create: (_) => PositionProvider(),
+          update: (_, auth, position) {
+            position!.setAuthProvider(auth);
+              return position;
+          },
+        ),
       ],
+
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
@@ -65,7 +73,8 @@ class MainApp extends StatelessWidget {
         },
         home: Consumer<AuthProvider>(
           // builder's params: context, auth (actual AuthProvider instance so state can be read),
-          // and _ is the child widget but we're not using it yet so the people on stackOverflow just put _
+          // and _ is the child widget but we're not using it yet 
+          // so the people on stackOverflow just put _
 
           // i just learned this so there are definitely some bug
           builder: (context, auth, _) {

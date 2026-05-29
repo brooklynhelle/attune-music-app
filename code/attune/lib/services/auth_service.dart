@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user_model.dart';
+import 'dart:math';
 
 // Talks to Firebase Auth (to sign up/in/out)
 // handles Firebase Authentication and Firestore user doc creation.
@@ -148,4 +149,77 @@ class AuthService {
       'friendRequests': FieldValue.arrayRemove([requesterUid]),
     });
   }
+
+  // gets nearby users
+  // fetches all users and filters to those within 20 miles using the haversine formula
+  // haversine is standard formula for calculating distance between 2 GPS coords on a sphere
+  Future<List<UserModel>> getNearbyUsers({
+    required String currentUid,
+    required double lat,
+    required double long, 
+    double radiusMiles = 20,
+  }) async {
+    // using firestore methods to query database to fetch users with non-null lat fields 
+    //    -> they have location enabled
+    final snapshot = await _db
+      .collection('users')
+      .where('latitude', isNull: false) 
+      .get();
+
+    // convert each Firestore doc we just fetched into UserModel object so we can access their data
+    final allUsers = snapshot.docs
+      .map((doc) => UserModel.fromMap(doc.id, doc.data()))
+      .toList();
+
+    // filter out current user from nearby list, redundant
+    final notMe = allUsers.where((user) => user.uid != currentUid).toList();
+
+    // filter out users without a location
+    final hasLocation = notMe 
+      .where((user) => user.latitude != null && user.longitude != null) 
+      .toList();
+
+    // filter to only users within a 20 mile (or whatever we pick) radius
+    final nearby = hasLocation.where((user) => 
+      // remember user lat and long might be null
+      _distanceMiles(lat, long, user.latitude!, user.longitude!) <= radiusMiles)
+      .toList();
+
+    // finally return list of users that arent you & are within 20 miles of you
+    return nearby;
+
+    // shoutout dart list functions, or whatever you're called, I love you so much
+  }
+
+  // haversine formula - calculates distance between two lat and long points in miles
+  // technically it returns the shortetst distance between two points; the current user
+  // is the starting point and the user we're comparing them to is the destination point
+  // I used someone else's code as a reference for this - see README.md
+  double _distanceMiles(double lat1, double long1, double lat2, double long2) {
+    const earthRadius = 3958.8; // earhth's radius in miles
+    final dLat = _toRad(lat2 - lat1); // difference in lat
+    final dLong = _toRad(long2 - long1); // difference in long
+
+    // square the sine of half the latitude difference
+    final sinLat = sin(dLat / 2) * sin(dLat / 2);
+
+    // square the sine of half the longitude difference
+    final sinLong = sin(dLong / 2) * sin(dLong / 2);
+
+    // account for the longitude difference shrinking near the poles (woah science)
+    // since long degrees are closer together the further you get from the equator
+    final cosProduct = cos(_toRad(lat1)) * cos(_toRad(lat2));
+
+    // smush it all together --> haversine formula
+    final combine = sinLat + cosProduct * sinLong;
+
+    // convert from ratio to miles --> final distance
+    return earthRadius * 2 * atan2(sqrt(combine), sqrt(1 - combine));
+  }
+
+  // helper method that returns degrees converted to radians
+  // using 3.141592653589793 for pi here
+  double _toRad(double deg) => deg * (3.141592653589793 / 180);
+
+
 }

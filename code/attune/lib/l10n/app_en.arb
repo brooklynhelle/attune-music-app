@@ -17,5 +17,9 @@
   "save": "Save",
   "noFriendsYet": "No friends yet",
   "noFriendRequests": "No friend requests",
-  "profilePictureUrl": "Profile picture URL"
+  "profilePictureUrl": "Profile picture URL",
+  "errorLoadingUsers": "Error loading nearby users: ",
+  "nearby": "Nearby: ",
+  "locationDisabled": "Enable location sharing to see other users near you",
+  "allAlone": "No users within 20 miles"
 }
