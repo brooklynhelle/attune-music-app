@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+import '../providers/position_provider.dart';
 import '../services/auth_service.dart';
 import '../models/user_model.dart';
 import '../l10n/app_localizations.dart';
+import '../widgets/monster_painter.dart';
 
 
 // The home screen where you go after you log in and link your spotify
@@ -68,15 +70,15 @@ class _HomeScreenState extends State<HomeScreen> {
     // whenever the auth provider calls notifyListeners(), like after location updates, 
     // re load nearby users so the list refreshes based on user's new location
     context.read<AuthProvider>().addListener(_loadNearbyUsers);
-
+    context.read<PositionProvider>().addListener(_loadNearbyUsers);
     _loadNearbyUsers();
   }
 
   // dispose to avoid memory leaks and what not
   @override
   void dispose() {
-    // 
     context.read<AuthProvider>().removeListener(_loadNearbyUsers);
+    context.read<PositionProvider>().removeListener(_loadNearbyUsers);
     super.dispose();
   }
 
@@ -104,9 +106,31 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_loading) {
       return Center(child: CircularProgressIndicator()); // classic
     } else if (user?.latitude == null) {
-      return Center(child: Text('${AppLocalizations.of(context)!.locationDisabled}'));
+      return Center(
+        child: Column(
+          children: [
+            CustomPaint(
+              size: Size(200, 200),
+              painter: MonsterPainter(),
+            ),
+            const SizedBox(height: 20),
+            Text('${AppLocalizations.of(context)!.locationDisabled}'),
+          ],
+        ),
+      );
     } else if (_nearbyUsers.isEmpty) {
-      return Center(child: Text('${AppLocalizations.of(context)!.allAlone}'));      
+      return Center(
+        child: Column(
+          children: [
+            CustomPaint(
+              size: Size(200, 200),
+              painter: MonsterPainter(),
+            ),
+            const SizedBox(height: 20),
+            Text('${AppLocalizations.of(context)!.allAlone}'),
+          ],
+        ),
+      );
     } else {
       return RefreshIndicator(
         onRefresh: _loadNearbyUsers,

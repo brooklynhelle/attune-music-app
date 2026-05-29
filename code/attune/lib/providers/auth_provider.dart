@@ -127,18 +127,6 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  // hardcoded test user bc we can't get firebase to work with user auth
-  void setTestUser() {
-    _currentUser = UserModel(
-      uid: 'test-uid',
-      email: 'test@test.com',
-      username: 'testuser',
-      latitude: 47.6553, // UW Seattle coordinates
-      longitude: -122.3035,
-    );
-    notifyListeners();
-  }
-
   // updates user's location, like after permissions are enabled
   Future<void> updateLocation(double lat, double long) async {
     if (_currentUser == null) return;
