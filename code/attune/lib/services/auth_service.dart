@@ -104,10 +104,12 @@ class AuthService {
     required String uid,
     required String spotifyId,
     required List<String> topGenres,
+    required List<String> topArtists,
   }) async {
     await _db.collection('users').doc(uid).update({
       'spotifyId': spotifyId,
       'topGenres': topGenres,
+      'topArtists': topArtists,
     });
   }
 

@@ -24,6 +24,9 @@ class UserModel {
   // the user's top genres (comes from spotify)
   final List<String> topGenres;
 
+  // the user's top artists (comes from spotify)
+  final List<String> topArtists;
+
   // the user's spotify ID, null until user connects their spotify
   final String? spotifyId;
 
@@ -48,6 +51,7 @@ class UserModel {
     this.bio,
     this.pfp,
     this.topGenres = const [],
+    this.topArtists = const [],
     this.spotifyId,
     this.latitude,
     this.longitude,
@@ -65,6 +69,7 @@ class UserModel {
       'pfp': pfp,
       // 'uid': uid, // this will become the DOC ID, shouldnt be here
       'topGenres': topGenres,
+      'topArtists': topArtists,
       'spotifyId': spotifyId,
       'latitude': latitude,
       'longitude': longitude,
@@ -85,6 +90,7 @@ class UserModel {
       bio: map['bio'],
       pfp: map['pfp'],
       topGenres: List<String>.from(map['topGenres'] ?? []),
+      topArtists: List<String>.from(map['topArtists'] ?? []),
       spotifyId: map['spotifyId'],
       latitude: map['latitude'] as double?,
       longitude: map['longitude'] as double?,

@@ -49,9 +49,9 @@ class UserProfileScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // display user's top genres
+            // display user's top artists
             Text(
-              AppLocalizations.of(context)!.topGenres,
+              AppLocalizations.of(context)!.topArtists,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
@@ -60,9 +60,9 @@ class UserProfileScreen extends StatelessWidget {
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: user.topGenres.length,
+              itemCount: user.topArtists.length,
               itemBuilder: (_, index) => ListTile(
-                title: Text(user.topGenres[index]),
+                title: Text(user.topArtists[index]),
               ),
             ),
           ]
