@@ -146,6 +146,9 @@ https://pub.dev/documentation/cloud_firestore/latest/cloud_firestore/FieldValue-
 Used leading with a ListTile to make the nearby user's pfp appear 
 to the left of the rest of the content:
 https://api.flutter.dev/flutter/material/AppBar/leading.html
+Also used trailing to do the opposite and make content appear to the right
+of the rest of the content:
+https://api.flutter.dev/flutter/material/ListTile/trailing.html
 
 To transition from the homescreen to the view other user's profile screen, I found this:
 https://docs.flutter.dev/cookbook/navigation/navigation-basics

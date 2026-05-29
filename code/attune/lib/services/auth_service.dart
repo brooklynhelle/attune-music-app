@@ -152,6 +152,19 @@ class AuthService {
     });
   }
 
+  // remove friend
+  Future<void> removeFriend({
+    required String currentUid,
+    required String friendUid,
+  }) async {
+    await _db.collection('users').doc(currentUid).update({
+      'friends': FieldValue.arrayRemove([friendUid]),
+    });
+    await _db.collection('users').doc(friendUid).update({
+      'friends': FieldValue.arrayRemove([currentUid]),
+    });
+  }
+
   // gets nearby users
   // fetches all users and filters to those within 20 miles using the haversine formula
   // haversine is standard formula for calculating distance between 2 GPS coords on a sphere

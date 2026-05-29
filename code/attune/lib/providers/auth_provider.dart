@@ -273,6 +273,17 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // remove friend
+  Future<void> removeFriend(String friendUid) async {
+    if (_currentUser == null) return;
+    await _authService.removeFriend(
+      currentUid: _currentUser!.uid,
+      friendUid: friendUid,
+    );
+    _currentUser = await _authService.fetchUser(_currentUser!.uid);
+    notifyListeners();
+  }
+
   // fetches the UserModel for each uid and returns them as a list
   Future<List<UserModel>> userModelOfUser(List<String> uids) async {
     final results = await Future.wait(

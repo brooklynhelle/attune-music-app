@@ -94,6 +94,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 itemCount: users.length,
                                 itemBuilder: (_, index) => ListTile(
                                   title: Text(users[index].username),
+                                  trailing: IconButton(
+                                    icon: const Icon(Icons.person_remove),
+                                    onPressed: () => context
+                                        .read<AuthProvider>()
+                                        .removeFriend(users[index].uid),
+                                  ),
                                 ),
                               );
                       },
@@ -104,50 +110,66 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             // friend request button
-            ElevatedButton(
-              onPressed: () {
-                final requests =
-                    context.read<AuthProvider>().currentUser?.friendRequests ??
-                    [];
-                showModalBottomSheet(
-                  context: context,
-                  builder: (_) => FutureBuilder<List<UserModel>>(
-                    future: context.read<AuthProvider>().userModelOfUser(
-                      requests,
+            const SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: ElevatedButton(
+                onPressed: () {
+                  final requests =
+                      context
+                          .read<AuthProvider>()
+                          .currentUser
+                          ?.friendRequests ??
+                      [];
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => FutureBuilder<List<UserModel>>(
+                      future: context.read<AuthProvider>().userModelOfUser(
+                        requests,
+                      ),
+                      builder: (context, result) {
+                        final users = result.data ?? [];
+                        return users.isEmpty
+                            ? Center(
+                                child: Text(
+                                  AppLocalizations.of(
+                                    context,
+                                  )!.noFriendRequests,
+                                ),
+                              )
+                            : ListView.builder(
+                                itemCount: users.length,
+                                itemBuilder: (context, index) => ListTile(
+                                  title: Text(users[index].username),
+                                  trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.check),
+                                        onPressed: () => context
+                                            .read<AuthProvider>()
+                                            .acceptFriendRequest(
+                                              users[index].uid,
+                                            ),
+                                      ),
+                                      IconButton(
+                                        icon: const Icon(Icons.close),
+                                        onPressed: () => context
+                                            .read<AuthProvider>()
+                                            .declineFriendRequest(
+                                              users[index].uid,
+                                            ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                      },
                     ),
-                    builder: (context, result) {
-                      final users = result.data ?? [];
-                      return users.isEmpty
-                          ? Center(
-                              child: Text(
-                                AppLocalizations.of(context)!.noFriendRequests,
-                              ),
-                            )
-                          : ListView.builder(
-                              itemCount: users.length,
-                              itemBuilder: (context, index) => Row(
-                                children: [
-                                  Expanded(child: Text(users[index].username)),
-                                  IconButton(
-                                    icon: const Icon(Icons.check),
-                                    onPressed: () => context
-                                        .read<AuthProvider>()
-                                        .acceptFriendRequest(users[index].uid),
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(Icons.close),
-                                    onPressed: () => context
-                                        .read<AuthProvider>()
-                                        .declineFriendRequest(users[index].uid),
-                                  ),
-                                ],
-                              ),
-                            );
-                    },
-                  ),
-                );
-              },
-              child: Text(AppLocalizations.of(context)!.friendRequests),
+                  );
+                },
+                child: Text(AppLocalizations.of(context)!.friendRequests),
+              ),
             ),
 
             // displaying top artists
