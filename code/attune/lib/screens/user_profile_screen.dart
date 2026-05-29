@@ -87,7 +87,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: widget.user.topArtists.length,
               itemBuilder: (_, index) =>
-                  ListTile(title: Text(widget.user.topArtists[index])),
+                  ListTile(title: Text(widget.user.topArtists[index], textAlign: TextAlign.center,)),
             ),
           ],
         ),
