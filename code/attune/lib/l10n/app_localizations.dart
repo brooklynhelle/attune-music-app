@@ -159,6 +159,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Top Tracks'**
   String get topTracks;
+
+  /// No description provided for @topGenres.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Genres'**
+  String get topGenres;
+
+  /// No description provided for @sendFriendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Send Friend Request'**
+  String get sendFriendRequest;
+
+  /// No description provided for @friends.
+  ///
+  /// In en, this message translates to:
+  /// **'Friends'**
+  String get friends;
+
+  /// No description provided for @friendRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'Friend Requests'**
+  String get friendRequests;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @noFriendsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No friends yet'**
+  String get noFriendsYet;
+
+  /// No description provided for @noFriendRequests.
+  ///
+  /// In en, this message translates to:
+  /// **'No friend requests'**
+  String get noFriendRequests;
+
+  /// No description provided for @profilePictureUrl.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile picture URL'**
+  String get profilePictureUrl;
 }
 
 class _AppLocalizationsDelegate

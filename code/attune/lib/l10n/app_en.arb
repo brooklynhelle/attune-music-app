@@ -9,5 +9,13 @@
   "noAccount": "Don't have an account? Sign up here",
   "signupFailed": "Unable to create account, please try again",
   "topArtists": "Top Artists",
-  "topTracks": "Top Tracks"
+  "topTracks": "Top Tracks",
+  "topGenres": "Top Genres",
+  "sendFriendRequest": "Send Friend Request",
+  "friends": "Friends",
+  "friendRequests": "Friend Requests",
+  "save": "Save",
+  "noFriendsYet": "No friends yet",
+  "noFriendRequests": "No friend requests",
+  "profilePictureUrl": "Profile picture URL"
 }
