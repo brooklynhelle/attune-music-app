@@ -3,9 +3,11 @@ import 'package:attune/screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+import '../providers/position_provider.dart';
 import '../services/auth_service.dart';
 import '../models/user_model.dart';
 import '../l10n/app_localizations.dart';
+import '../widgets/monster_painter.dart';
 
 // The home screen where you go after you log in and link your spotify
 class HomeScreen extends StatefulWidget {
@@ -116,10 +118,32 @@ class _HomeScreenState extends State<HomeScreen> {
       return Center(child: CircularProgressIndicator()); // classic
     } else if (user?.latitude == null) {
       return Center(
-        child: Text('${AppLocalizations.of(context)!.locationDisabled}'),
+        
+        child: Column(
+          children: [
+            CustomPaint(
+              size: Size(200, 200),
+              painter: MonsterPainter(),
+            ),
+            const SizedBox(height: 20),
+            Text('${AppLocalizations.of(context)!.locationDisabled}'),
+      
+          ],
+        ),
       );
     } else if (_nearbyUsers.isEmpty) {
-      return Center(child: Text('${AppLocalizations.of(context)!.allAlone}'));
+      return Center(
+        child: Column(
+          children: [
+            CustomPaint(
+              size: Size(200, 200),
+              painter: MonsterPainter(),
+            ),
+            const SizedBox(height: 20),
+            Text('${AppLocalizations.of(context)!.allAlone}'),
+          ],
+        ),
+);
     } else {
       return RefreshIndicator(
         onRefresh: _loadNearbyUsers,
