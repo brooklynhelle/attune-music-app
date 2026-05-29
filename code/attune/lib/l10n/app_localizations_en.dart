@@ -41,4 +41,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get topTracks => 'Top Tracks';
+
+  @override
+  String get topGenres => 'Top Genres';
+
+  @override
+  String get sendFriendRequest => 'Send Friend Request';
+
+  @override
+  String get friends => 'Friends';
+
+  @override
+  String get friendRequests => 'Friend Requests';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get noFriendsYet => 'No friends yet';
+
+  @override
+  String get noFriendRequests => 'No friend requests';
+
+  @override
+  String get profilePictureUrl => 'Profile picture URL';
 }

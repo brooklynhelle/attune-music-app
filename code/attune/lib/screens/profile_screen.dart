@@ -41,13 +41,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 12),
               TextField(
                 controller: _pfpController,
-                decoration: const InputDecoration(hintText: 'Profile picture URL'),
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.profilePictureUrl),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: ElevatedButton(
                   onPressed: () => context.read<AuthProvider>().updatePfp(_pfpController.text.trim()),
-                  child: const Text('Save'),
+                  child: Text(AppLocalizations.of(context)!.save),
                 ),
               ),
               // box for name
@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     showModalBottomSheet(
                       context: context,
                       builder: (_) => friends.isEmpty
-                        ? const Center(child: Text('No friends yet'))
+                        ? Center(child: Text(AppLocalizations.of(context)!.noFriendsYet))
                         : ListView.builder(
                           itemCount: friends.length,
                           itemBuilder: (_, index) => ListTile(
@@ -83,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                     );
                   },
-                  child: const Text('Friends'),
+                  child: Text(AppLocalizations.of(context)!.friends),
                 ),
               ),
               // friend request button
@@ -93,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   showModalBottomSheet(
                     context: context,
                     builder: (_) => requests.isEmpty
-                      ? const Center(child: Text('No friend requests'))
+                      ? Center(child: Text(AppLocalizations.of(context)!.noFriendRequests))
                       : ListView.builder(
                         itemCount: requests.length,
                         itemBuilder: (context, index) => Row(
@@ -112,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                   );
                 },
-                child: const Text('Friend Requests'),
+                child: Text(AppLocalizations.of(context)!.friendRequests),
               ),
 
               // displaying top artists
