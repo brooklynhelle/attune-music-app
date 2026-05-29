@@ -140,6 +140,18 @@ https://api.flutter.dev/flutter/widgets/BottomNavigationBarItem-class.html
 To let the user view and scroll through their friends:
 https://api.flutter.dev/flutter/material/showModalBottomSheet.html
 
-
 Used FieldValue, a FireStore helper to update the arrays with the uid for friend requests:
 https://pub.dev/documentation/cloud_firestore/latest/cloud_firestore/FieldValue-class.html
+
+Used leading with a ListTile to make the nearby user's pfp appear 
+to the left of the rest of the content:
+https://api.flutter.dev/flutter/material/AppBar/leading.html
+
+To transition from the homescreen to the view other user's profile screen, I found this:
+https://docs.flutter.dev/cookbook/navigation/navigation-basics
+and from there it recommended using MaterialPageRoute, so I clicked on it and it took me here:
+https://api.flutter.dev/flutter/material/MaterialPageRoute-class.html?_gl=1*og0ww9*_ga*MjMwNjk3MTY2LjE3Nzc0Mzk4Njg.*_ga_04YGWK0175*czE3ODAwODU4OTYkbzIxJGcxJHQxNzgwMDg2NDQxJGo0NiRsMCRoMA..
+
+To get the username for friendrequests, I used FutureBuilder. It allows me
+to wait for Firestore results to come back so I can use them instead of the users uid:
+https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html

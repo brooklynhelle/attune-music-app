@@ -20,7 +20,7 @@ class UserProfileScreen extends StatelessWidget {
           children: [
             // pfp
             CircleAvatar(
-              radius: 30,
+              radius: 50,
               backgroundImage: user.pfp != null ? NetworkImage(user.pfp!) : null,
               child: user.pfp == null ? const Icon(Icons.person) : null,
             ),
