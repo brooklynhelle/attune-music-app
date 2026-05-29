@@ -3,10 +3,8 @@ import 'package:flutter/foundation.dart';
 import '../services/auth_service.dart';
 import '../models/user_model.dart';
 
-
-// This is Firebase Auth Provider; handles sign up/in/out & keeps track of user 
+// This is Firebase Auth Provider; handles sign up/in/out & keeps track of user
 class AuthProvider extends ChangeNotifier {
-
   // instance of AuthService to do stuff with
   final AuthService _authService = AuthService();
 
@@ -14,7 +12,7 @@ class AuthProvider extends ChangeNotifier {
   final SpotifyAuth _spotifyAuth = SpotifyAuth();
 
   // are we waiting on a network call to finish?
-  bool _dataLoading = false; 
+  bool _dataLoading = false;
 
   // keeps track of whether or not there's been an error
   bool _hasError = false;
@@ -30,7 +28,7 @@ class AuthProvider extends ChangeNotifier {
 
   // getters since fields are private (dont need one for authService bc thats the
   // point of the provider)
-  
+
   // returns the current user, if there is one
   UserModel? get currentUser => _currentUser;
 
@@ -40,7 +38,7 @@ class AuthProvider extends ChangeNotifier {
   // returns whether or not there was an error loading data
   bool get dataLoading => _dataLoading;
 
-  // returns whether or not the current user is authenticated 
+  // returns whether or not the current user is authenticated
   // --> should the program show the home vs login screen
   bool get isAuthenticated => _currentUser != null;
 
@@ -68,8 +66,8 @@ class AuthProvider extends ChangeNotifier {
       // if no user exists yet/login fails, current user is null
       if (user == null) {
         _currentUser = null;
-      } 
-      // otherwise, set current user 
+      }
+      // otherwise, set current user
       else {
         _currentUser = await _authService.fetchUser(user.uid);
       }
@@ -78,7 +76,7 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  // signs user out using the authentication service 
+  // signs user out using the authentication service
   Future<void> signOut() async {
     _spotifyAuth.logout();
     _spotifyUser = null;
@@ -88,7 +86,7 @@ class AuthProvider extends ChangeNotifier {
     await _authService.signOut();
   }
 
-  // signs user in using the authentication service 
+  // signs user in using the authentication service
   // with password and username given, of course
   // returns a bool so we know if login was successful
   Future<bool> signIn({required String email, required String password}) async {
@@ -105,14 +103,14 @@ class AuthProvider extends ChangeNotifier {
       if (firebaseUser != null) {
         _currentUser = await _authService.fetchUser(firebaseUser.uid);
 
-      if (_currentUser == null) {
-        _currentUser = UserModel(
-          uid: firebaseUser.uid,
-          email: firebaseUser.email ?? '',
-          username: firebaseUser.email?.split('@')[0] ?? 'user',
-        );
-        await _authService.createUser(_currentUser!);
-      }
+        if (_currentUser == null) {
+          _currentUser = UserModel(
+            uid: firebaseUser.uid,
+            email: firebaseUser.email ?? '',
+            username: firebaseUser.email?.split('@')[0] ?? 'user',
+          );
+          await _authService.createUser(_currentUser!);
+        }
 
         print('UserModel fetched: $_currentUser');
         notifyListeners();
@@ -130,15 +128,15 @@ class AuthProvider extends ChangeNotifier {
 
   // hardcoded test user bc we can't get firebase to work with user auth
   void setTestUser() {
-  _currentUser = UserModel(
-    uid: 'test-uid',
-    email: 'test@test.com',
-    username: 'testuser',
-    latitude: 47.6553,   // UW Seattle coordinates
-    longitude: -122.3035,
-  );
-  notifyListeners();
-}
+    _currentUser = UserModel(
+      uid: 'test-uid',
+      email: 'test@test.com',
+      username: 'testuser',
+      latitude: 47.6553, // UW Seattle coordinates
+      longitude: -122.3035,
+    );
+    notifyListeners();
+  }
 
   // updates user's location, like after permissions are enabled
   Future<void> updateLocation(double lat, double long) async {
@@ -146,12 +144,12 @@ class AuthProvider extends ChangeNotifier {
     await _authService.updateLocation(_currentUser!.uid, lat, long);
     _currentUser!.latitude = lat;
     _currentUser!.longitude = long;
-    notifyListeners(); 
-    // any widget watching AuthProvider and displaying location-based info 
-    // needs to know so they can rebuild  
+    notifyListeners();
+    // any widget watching AuthProvider and displaying location-based info
+    // needs to know so they can rebuild
   }
 
-  // signs user in using the authentication service 
+  // signs user in using the authentication service
   // with password and username given, of course
   // nullable bc user might not exist yet/be signed in/up
   Future<UserModel?> signUp({
@@ -165,12 +163,12 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         password: password,
         username: username,
-    );
-    // set current user if signup was successful
-    _currentUser = user;
-    notifyListeners();
-    return user;
-    } // otherwise, error 
+      );
+      // set current user if signup was successful
+      _currentUser = user;
+      notifyListeners();
+      return user;
+    } // otherwise, error
     catch (e, stackTrace) {
       _hasError = true;
       print('Signup error: $e');
@@ -246,9 +244,43 @@ class AuthProvider extends ChangeNotifier {
   // updates the user's profile picture URL and refreshes the current user
   Future<void> updatePfp(String pfp) async {
     if (_currentUser == null) return;
-    await _authService.updatePfp(
-      uid: _currentUser!.uid,
-      pfp: pfp,
+    await _authService.updatePfp(uid: _currentUser!.uid, pfp: pfp);
+    _currentUser = await _authService.fetchUser(_currentUser!.uid);
+    notifyListeners();
+  }
+
+  // sends a friend request to another user
+  Future<void> sendFriendRequest(String targetUid) async {
+    if (_currentUser == null) {
+      return;
+    }
+    await _authService.sendFriendRequest(
+      currentUid: _currentUser!.uid,
+      targetUid: targetUid,
+    );
+  }
+
+  // accepts a friend request from another user
+  Future<void> acceptFriendRequest(String requesterUid) async {
+    if (_currentUser == null) {
+      return;
+    }
+    await _authService.acceptFriendRequest(
+      currentUid: _currentUser!.uid,
+      requesterUid: requesterUid,
+    );
+    _currentUser = await _authService.fetchUser(_currentUser!.uid);
+    notifyListeners();
+  }
+
+  // declines a friend request from another user
+  Future<void> declineFriendRequest(String requesterUid) async {
+    if (_currentUser == null) {
+      return;
+    }
+    await _authService.declineFriendRequest(
+      currentUid: _currentUser!.uid,
+      requesterUid: requesterUid,
     );
     _currentUser = await _authService.fetchUser(_currentUser!.uid);
     notifyListeners();

@@ -121,3 +121,7 @@ https://api.flutter.dev/flutter/widgets/BottomNavigationBarItem-class.html
 
 To let the user view and scroll through their friends:
 https://api.flutter.dev/flutter/material/showModalBottomSheet.html
+
+
+Used FieldValue, a FireStore helper to update the arrays with the uid for friend requests:
+https://pub.dev/documentation/cloud_firestore/latest/cloud_firestore/FieldValue-class.html

@@ -43,9 +43,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 controller: _pfpController,
                 decoration: const InputDecoration(hintText: 'Profile picture URL'),
               ),
-              ElevatedButton(
-                onPressed: () => context.read<AuthProvider>().updatePfp(_pfpController.text.trim()),
-                child: const Text('Save'),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: ElevatedButton(
+                  onPressed: () => context.read<AuthProvider>().updatePfp(_pfpController.text.trim()),
+                  child: const Text('Save'),
+                ),
               ),
               // box for name
               const SizedBox(height: 20),
@@ -63,22 +66,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               // friends button
               const SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                child: ElevatedButton(
+                  onPressed: () {
+                    final friends = context.read<AuthProvider>().currentUser?.friends ?? [];
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (_) => friends.isEmpty
+                        ? const Center(child: Text('No friends yet'))
+                        : ListView.builder(
+                          itemCount: friends.length,
+                          itemBuilder: (_, index) => ListTile(
+                            title: Text(friends[index]),
+                          ),
+                        ),
+                    );
+                  },
+                  child: const Text('Friends'),
+                ),
+              ),
+              // friend request button
               ElevatedButton(
                 onPressed: () {
-                  final friends = context.read<AuthProvider>().currentUser?.friends ?? [];
+                  final requests = context.read<AuthProvider>().currentUser?.friendRequests ?? [];
                   showModalBottomSheet(
                     context: context,
-                    builder: (_) => friends.isEmpty
-                      ? const Center(child: Text('No friends yet'))
+                    builder: (_) => requests.isEmpty
+                      ? const Center(child: Text('No friend requests'))
                       : ListView.builder(
-                        itemCount: friends.length,
-                        itemBuilder: (_, index) => ListTile(
-                          title: Text(friends[index]),
+                        itemCount: requests.length,
+                        itemBuilder: (context, index) => Row(
+                          children: [
+                            Expanded(child: Text(requests[index])),
+                            IconButton(
+                              icon: const Icon(Icons.check),
+                              onPressed: () => context.read<AuthProvider>().acceptFriendRequest(requests[index]),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.close),
+                              onPressed: () => context.read<AuthProvider>().declineFriendRequest(requests[index]),
+                            ),
+                          ],
                         ),
                       ),
                   );
                 },
-                child: const Text('Friends'),
+                child: const Text('Friend Requests'),
               ),
 
               // displaying top artists
