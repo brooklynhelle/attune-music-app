@@ -1,10 +1,11 @@
+import 'package:attune/providers/position_provider.dart';
+import 'package:attune/screens/user_profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
 import '../services/auth_service.dart';
 import '../models/user_model.dart';
 import '../l10n/app_localizations.dart';
-
 
 // The home screen where you go after you log in and link your spotify
 class HomeScreen extends StatefulWidget {
@@ -15,13 +16,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   // get instance of auth service to call the method that gets nearby users (from auth_service.dart)
   final AuthService _authService = AuthService();
   // list of nearby users, filtered by location
   List<UserModel> _nearbyUsers = [];
   // whether or not list of nearby users data loaded successfully, for user experience (fancy!)
   bool _loading = true;
+  //
+  AuthProvider? _authProvider;
+  //
+  bool _listenerAdded = false;
 
   @override
   void initState() {
@@ -33,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadNearbyUsers() async {
     // apparently you have to use context.read instead of context.watch since we're not in a builder
     final auth = context.read<AuthProvider>();
-    final user = auth.currentUser;   
+    final user = auth.currentUser;
 
     // make sure we have user's location so we can load nearby users
     if (user?.latitude == null || user?.longitude == null) {
@@ -45,29 +49,38 @@ class _HomeScreenState extends State<HomeScreen> {
       // if user hasn't enabled location, stop loading and return early bc not fetching anything
       // dont freaking forget that everything is nullable
       final users = await _authService.getNearbyUsers(
-        currentUid: user!.uid, 
-        lat: user.latitude!, 
+        currentUid: user!.uid,
+        lat: user.latitude!,
         long: user.longitude!,
       );
       // now call firestore to get nearby users, pass in current user's uid and coords
       // if the load fails we need to handle it gracefully! as Tal would say
       setState(() {
         _nearbyUsers = users;
-        _loading = false; // this should trigger a rebuild once nearbyUsers are loaded successfully
+        _loading =
+            false; // this should trigger a rebuild once nearbyUsers are loaded successfully
       });
-    } // otherwise tell user there was an error and set the state accordingly 
+    } // otherwise tell user there was an error and set the state accordingly
     catch (e) {
       print('${AppLocalizations.of(context)!.errorLoadingUsers}$e');
-      setState(() => _loading = false); // if we add a loading spinner this stops it
+      setState(
+        () => _loading = false,
+      ); // if we add a loading spinner this stops it
     }
   }
-  
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // whenever the auth provider calls notifyListeners(), like after location updates, 
+
+    if (!_listenerAdded) {
+      _authProvider = context.read<AuthProvider>();
+      _authProvider!.addListener(_loadNearbyUsers);
+      _listenerAdded = true;
+    }
+
+    // whenever the auth provider calls notifyListeners(), like after location updates,
     // re load nearby users so the list refreshes based on user's new location
-    context.read<AuthProvider>().addListener(_loadNearbyUsers);
 
     _loadNearbyUsers();
   }
@@ -75,18 +88,18 @@ class _HomeScreenState extends State<HomeScreen> {
   // dispose to avoid memory leaks and what not
   @override
   void dispose() {
-    // 
-    context.read<AuthProvider>().removeListener(_loadNearbyUsers);
+    //
+    _authProvider?.removeListener(_loadNearbyUsers);
     super.dispose();
   }
 
-
-  @override 
+  @override
   Widget build(BuildContext context) {
     // here we ARE in a builder so we use .watch instead of .read
     // idk why it took me so long to realize the difference
     final auth = context.watch<AuthProvider>();
-    final user = auth.currentUser;   
+    final user = auth.currentUser;
+    context.watch<PositionProvider>();
 
     // UI
     return Scaffold(
@@ -95,8 +108,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
-
   // This helps the UI know what to display based on the information available.
   // coulda used a bunch of ternary operators in the widget tree but this is nicer
   Widget _bodyHelper(UserModel? user) {
@@ -104,9 +115,11 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_loading) {
       return Center(child: CircularProgressIndicator()); // classic
     } else if (user?.latitude == null) {
-      return Center(child: Text('${AppLocalizations.of(context)!.locationDisabled}'));
+      return Center(
+        child: Text('${AppLocalizations.of(context)!.locationDisabled}'),
+      );
     } else if (_nearbyUsers.isEmpty) {
-      return Center(child: Text('${AppLocalizations.of(context)!.allAlone}'));      
+      return Center(child: Text('${AppLocalizations.of(context)!.allAlone}'));
     } else {
       return RefreshIndicator(
         onRefresh: _loadNearbyUsers,
@@ -114,12 +127,30 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: _nearbyUsers.length,
           itemBuilder: (context, index) {
             // list of homies
-            return Placeholder();
+            final nearbyUser = _nearbyUsers[index];
+            return ListTile(
+              leading: CircleAvatar(
+                backgroundImage: nearbyUser.pfp != null
+                    ? NetworkImage(nearbyUser.pfp!)
+                    : null,
+                child: nearbyUser.pfp == null ? const Icon(Icons.person) : null,
+              ),
+              title: Text(nearbyUser.name ?? nearbyUser.username),
+              subtitle: Text(
+                nearbyUser.topArtists.isNotEmpty
+                    ? nearbyUser.topArtists.first
+                    : '',
+              ),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => UserProfileScreen(user: nearbyUser),
+                ),
+              ),
+            );
           },
         ),
       );
     }
   }
-
-
 }

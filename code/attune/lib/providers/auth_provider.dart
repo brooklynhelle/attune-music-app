@@ -113,14 +113,12 @@ class AuthProvider extends ChangeNotifier {
           await _authService.createUser(_currentUser!);
         }
 
-        print('UserModel fetched: $_currentUser');
         notifyListeners();
       }
       return true;
-    } catch (e) {
+    } catch (_) {
       // if the login was unsuccessful, notify listeners and return false
       // so error message can display & user can try again
-      print('Sign in error: $e');
       _hasError = true;
       notifyListeners();
       return false;
@@ -172,7 +170,6 @@ class AuthProvider extends ChangeNotifier {
     } // otherwise, error
     catch (e, stackTrace) {
       _hasError = true;
-      print('Signup error: $e');
       notifyListeners();
       return null;
     }
@@ -286,6 +283,14 @@ class AuthProvider extends ChangeNotifier {
     );
     _currentUser = await _authService.fetchUser(_currentUser!.uid);
     notifyListeners();
+  }
+
+  // fetches the UserModel for each uid and returns them as a list
+  Future<List<UserModel>> userModelOfUser(List<String> uids) async {
+    final results = await Future.wait(
+      uids.map((uid) => _authService.fetchUser(uid)),
+    );
+    return results.whereType<UserModel>().toList();
   }
 
   // // search for users by username
