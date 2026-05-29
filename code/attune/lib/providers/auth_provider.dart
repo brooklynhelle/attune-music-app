@@ -20,9 +20,11 @@ class AuthProvider extends ChangeNotifier {
   // the current user; nullable bc no user when app first loads
   UserModel? _currentUser;
 
-  // kinda serves as an "is spotify connected' field
-  bool get isSpotifyConnected => _currentUser?.spotifyId != null;
+  // tracks whether spotify is connected each time you run the app
+  bool _isSpotifyConnectedThisTime = false;
 
+  // kinda serves as an "is spotify connected' field
+  bool get isSpotifyConnected => _isSpotifyConnectedThisTime;
 
   // Spotify data
   SpotifyUser? _spotifyUser;
@@ -211,8 +213,9 @@ class AuthProvider extends ChangeNotifier {
     } catch (e) {
       _hasError = true;
     } finally {
+      _isSpotifyConnectedThisTime = true;
       _dataLoading = false;
-      notifyListeners(); 
+      notifyListeners();
     }
   }
 
