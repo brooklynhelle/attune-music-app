@@ -58,16 +58,34 @@ REFLECTION:
 I consulted these when learning about how to get the UI to switch screens based on the auth state
 
 CONSULTED: 
+https://medium.com/@abdurrehman-520/unlock-the-power-of-geofencing-in-flutter-with-haversine-formula-21b8203b1a5
+https://github.com/yeradis/haversine.dart
+https://pub.dev/documentation/flutter_map_math/latest/
+https://dart.dev/libraries/dart-math
 REFLECTION:
+These are all the resources we used to imlpement the list that shows users nearby to the current user. To generate the list of neaby users, we fetched all users, and then used the Haversine formula to filter by distance to generate the list of closest nearby users. We thought about using a map and then using the FlutterMapMath functions to get the distance between two users, but we liked the more math-y, fewer dependencies way. I initially had no idea how to implement the math part for this part of the app, but luckily a lot of other people have done this before and written articles about it lol. Already having queried the geolocation API for food finder made this a lot easier and more convenient than I expected getting the data to be. Haversine is perfect for this because you can give it lat and long coords, which is what the Geolocator API provides for a user, and it can return miles, which is what we used it for. 
 
 CONSULTED: 
+https://api.flutter.dev/flutter/material/RefreshIndicator-class.html
 REFLECTION:
+SWIPE TO REFRESH!!! hell yeah
 
 CONSULTED: 
+"ChangeNotifierProxyProvider vs ChangeNotifierProvider" in google - the AI overview directed me to:
+https://stackoverflow.com/questions/75805196/how-does-changenotifierproxyprovider-work-in-flutter
+https://pub.dev/documentation/provider/latest/provider/ChangeNotifierProvider-class.html
+https://stackoverflow.com/questions/59883666/flutter-provider-changenotifierprovider-question
 REFLECTION:
+This was helpful when updating my UI based on whether or not the user enabled location sharing, 
+since so much of the app relies on this being enabled but we also needed to handle the cases where the user denied permissions
 
 CONSULTED: 
+https://api.flutter.dev/flutter/widgets/State/didChangeDependencies.html
 REFLECTION:
+Google told me this would help with having stuff happen in my build class before and after dependency changes 
+?????????
+??????
+???
 
 CONSULTED: 
 REFLECTION:
