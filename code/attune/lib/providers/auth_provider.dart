@@ -85,6 +85,7 @@ class AuthProvider extends ChangeNotifier {
     _topArtists = [];
     _topTracks = [];
     _topGenres = [];
+    _isSpotifyConnectedThisTime = false;
     await _authService.signOut();
   }
 
