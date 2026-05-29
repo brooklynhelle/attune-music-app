@@ -20,6 +20,10 @@ class AuthProvider extends ChangeNotifier {
   // the current user; nullable bc no user when app first loads
   UserModel? _currentUser;
 
+  // kinda serves as an "is spotify connected' field
+  bool get isSpotifyConnected => _currentUser?.spotifyId != null;
+
+
   // Spotify data
   SpotifyUser? _spotifyUser;
   List<SpotifyArtist> _topArtists = [];
@@ -41,9 +45,6 @@ class AuthProvider extends ChangeNotifier {
   // returns whether or not the current user is authenticated
   // --> should the program show the home vs login screen
   bool get isAuthenticated => _currentUser != null;
-
-  // returns whether or not spotify is connected
-  bool get isSpotifyConnected => _spotifyAuth.isConnected;
 
   // returns user's Spotify profile
   SpotifyUser? get spotifyUser => _spotifyUser;
@@ -78,7 +79,6 @@ class AuthProvider extends ChangeNotifier {
 
   // signs user out using the authentication service
   Future<void> signOut() async {
-    _spotifyAuth.logout();
     _spotifyUser = null;
     _topArtists = [];
     _topTracks = [];
@@ -86,20 +86,19 @@ class AuthProvider extends ChangeNotifier {
     await _authService.signOut();
   }
 
+  // TODO: FIX EVERYTHING WEIRD YOU DID WHEN DEBUGGING THE AUTH
+
   // signs user in using the authentication service
   // with password and username given, of course
   // returns a bool so we know if login was successful
   Future<bool> signIn({required String email, required String password}) async {
     try {
       // if login succeeds, no issues yay
-      print('Attempting sign in with: $email');
       await _authService.signIn(email: email, password: password);
-      print('Sign in successful');
 
       // signing in wouldnt work until I manually updated the currentUser this way instead of
       // relying on firebase to actually work
       final firebaseUser = await _authService.getCurrentUser();
-      print('Current user: $firebaseUser');
       if (firebaseUser != null) {
         _currentUser = await _authService.fetchUser(firebaseUser.uid);
 
@@ -172,7 +171,6 @@ class AuthProvider extends ChangeNotifier {
     catch (e, stackTrace) {
       _hasError = true;
       print('Signup error: $e');
-      print('Stack trace: $stackTrace');
       notifyListeners();
       return null;
     }
@@ -214,7 +212,7 @@ class AuthProvider extends ChangeNotifier {
       _hasError = true;
     } finally {
       _dataLoading = false;
-      notifyListeners();
+      notifyListeners(); 
     }
   }
 
