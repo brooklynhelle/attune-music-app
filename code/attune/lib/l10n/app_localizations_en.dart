@@ -78,4 +78,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get allAlone => 'No users within 20 miles';
+
+  @override
+  String get signOut => 'Sign out';
 }

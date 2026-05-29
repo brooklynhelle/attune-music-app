@@ -175,6 +175,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   );
                 },
               ),
+
+              const SizedBox(height: 30), 
+              ElevatedButton(
+                onPressed: () async {
+                  await context.read<AuthProvider>().signOut();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:  Colors.red,
+                  foregroundColor: Colors.white,
+                ),
+                child: Text(AppLocalizations.of(context)!.signOut),
+              ),
             ],
           ),
       ),

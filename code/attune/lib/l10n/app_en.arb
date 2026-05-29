@@ -21,5 +21,6 @@
   "errorLoadingUsers": "Error loading nearby users: ",
   "nearby": "Nearby: ",
   "locationDisabled": "Enable location sharing to see other users near you",
-  "allAlone": "No users within 20 miles"
+  "allAlone": "No users within 20 miles",
+  "signOut": "Sign out"
 }

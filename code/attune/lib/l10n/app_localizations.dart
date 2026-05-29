@@ -231,6 +231,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No users within 20 miles'**
   String get allAlone;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
 }
 
 class _AppLocalizationsDelegate
