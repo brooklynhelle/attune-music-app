@@ -13,40 +13,40 @@ import 'l10n/app_localizations.dart';
 import 'providers/position_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-// internationalizing shouldnt be that hard...
-
+// initializes Firebase, loads variables, and registers the
+// deep link protocol for macOS before launching the app
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await dotenv.load(fileName: ".env");
 
+  // so Spotify can redirect back to the app on macOS
   if (Platform.isMacOS) {
     registerProtocol('attune');
   }
 
-
-  // get firebase goin - await bc nothing can happen before this happens
+  // initialize firebase bc nothing can happen before this happens
   await Firebase.initializeApp(
-    // connects app to Firebase project
     options: DefaultFirebaseOptions
-        .currentPlatform, // configs for platform (iOS for us)
+        .currentPlatform, 
   );
+
   runApp(const MainApp());
 }
 
+// root of app - sets up providers, sets up routes 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
-  // root of app
   @override
   Widget build(BuildContext context) {
-    // useful for managing multiple providers (we're gonna have a lot highkey)
+    // for managing multiple providers 
     return MultiProvider(
       providers: [
         // authentication provider
         ChangeNotifierProvider(create: (_) => AuthProvider()),
 
-        // geolocation provider — use AuthProvider to update location
+        // geolocation provider — manages GPS location, proxy provider used so 
+        // PositionProvider can call AuthProvider to update location when GPS coords change
         ChangeNotifierProxyProvider<AuthProvider, PositionProvider>(
           create: (_) => PositionProvider(),
           update: (_, auth, position) {
@@ -64,11 +64,8 @@ class MainApp extends StatelessWidget {
           '/signup': (_) => const SignupScreen(),
         },
         home: Consumer<AuthProvider>(
-          // builder's params: context, auth (actual AuthProvider instance so state can be read),
-          // and _ is the child widget but we're not using it yet 
-          // so the people on stackOverflow just put _
-
-          // i just learned this so there are definitely some bug
+          // Consumer rebuilds the home widget whenever auth state changes
+          // reroutes user to the correct screen based on state of auth & spotify connection
           builder: (context, auth, _) {
             if (auth.isAuthenticated && auth.isSpotifyConnected) {
               return const MainScreen();

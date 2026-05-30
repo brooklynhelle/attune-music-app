@@ -91,8 +91,8 @@ class AuthService {
     }
   }
 
-  // updates the user's Spotify ID and top genres.
-  // called after a successful Spotify login
+  // updates the user's Spotify ID and top artists/tracks.
+  // called after a successful Spotify login/OAuth flow
   Future<void> updateSpotifyData({
     required String uid,
     required String spotifyId,
@@ -111,7 +111,7 @@ class AuthService {
     await _db.collection('users').doc(uid).update({'pfp': pfp});
   }
 
-  // sends a friend request
+  // sends a friend request, adds current user's uid to the other user's friendRequests list
   Future<void> sendFriendRequest({
     required String currentUid,
     required String targetUid,
@@ -121,7 +121,7 @@ class AuthService {
     });
   }
 
-  // accepts a friend request
+  // adds each user to the other's friends list and removes the request
   Future<void> acceptFriendRequest({
     required String currentUid,
     required String requesterUid,
@@ -135,7 +135,7 @@ class AuthService {
     });
   }
 
-  // declines a friend request
+  // removes the requester's uid from the current user's friendRequests list
   Future<void> declineFriendRequest({
     required String currentUid,
     required String requesterUid,
@@ -145,7 +145,7 @@ class AuthService {
     });
   }
 
-  // remove friend
+  // removes each user from the other's friends list
   Future<void> removeFriend({
     required String currentUid,
     required String friendUid,
@@ -195,14 +195,10 @@ class AuthService {
 
     // finally return list of users that arent you & are within 20 miles of you
     return nearby;
-
-    // shoutout dart list functions, or whatever you're called, I love you so much
   }
 
-  // haversine formula - calculates distance between two lat and long points in miles
-  // technically it returns the shortetst distance between two points; the current user
-  // is the starting point and the user we're comparing them to is the destination point
-  // I used someone else's code as a reference for this - see README.md
+  // calculates the distance in miles between two GPS coordinates
+  // using the Haversine formula — see README.md for attribution
   double _distanceMiles(double lat1, double long1, double lat2, double long2) {
     const earthRadius = 3958.8; // earhth's radius in miles
     final dLat = _toRad(lat2 - lat1); // difference in lat
@@ -226,7 +222,7 @@ class AuthService {
   }
 
   // helper method that returns degrees converted to radians
-  // using 3.141592653589793 for pi here
+  // using 3.141592653589793 for pi 
   double _toRad(double deg) => deg * (3.141592653589793 / 180);
 
 
