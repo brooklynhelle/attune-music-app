@@ -24,7 +24,9 @@ REQUIREMENTS
 
 A spotify account that you can log into (doesn't necessarily have to be yours)
 An iPhone OR mac computer
-Location sharing (when prompted) must be granted for the nearby users feature to work. If user is not prompted, they should turn their location services on in settings.
+Location sharing (when prompted) must be granted for the nearby users feature to work. If user is not prompted, they should turn their location services for attune on in settings.
+Since this app is still in the development stage, Spotify's API requires each user's Spotify email to be added to the development page.
+It can only hold up to 5 users, but students can add their email for a quick demo and then remove it so others can do the same.
 
 
 PROJECT LAYOUT/STRUCTURE
@@ -45,7 +47,8 @@ login_screen.dart --> email/password sign in screen. Displays error if sign in f
 signup_screen.dart --> account creation screen. Displays error if sign in fails, redirects to Spotify account link screen if login was successful, then triggers location permission request 
 home_screen.dart --> displays nearby users within 20 miles, listens to both Auth and Position provider 
 main_screen.dart --> bottom nav bar that allows you to switch between home and profile screens
-user_profile_screen.dart --> the current user's profile, shows profile picture and the option to update your pfp (only add-able via url), top artists and tracks, friends and friend requests, and the sign out button. 
+profile_screen.dart --> the current user's profile, shows profile picture and the option to update your pfp (only add-able via url), top artists and tracks, friends and friend requests, and the sign out button. 
+user_profile_screen.dart --> used to view another user's profile, shows profile picture, name, bio, and top artists. Can request to be friends on this page.
 spotify_connect_screen.dart --> shown after a successful sign in/up, prompts user to link their Spotify account
 
 lib/widgets/
@@ -139,11 +142,6 @@ CONSULTED:
 SpanishDictionary.com
 REFLECTION:
 Used this to internationalize
-
-CONSULTED: 
-REFLECTION:
-
-
 
 
 # attune
