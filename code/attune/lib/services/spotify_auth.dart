@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:uni_links/uni_links.dart';
 
 // Handles Spotify OAuth 2.0 with PKCE and data fetching.
-// Nothing should call this except AuthProvider.
+// Nothing should call this directly except AuthProvider.
 class SpotifyAuth {
   static const String _authEndpoint = 'https://accounts.spotify.com/authorize';
   static const String _tokenEndpoint = 'https://accounts.spotify.com/api/token';
@@ -24,7 +24,9 @@ class SpotifyAuth {
   String? _accessToken;
   String? _refreshToken;
   DateTime? _tokenExpiry;
-  String? _codeVerifier; // stored so we can use it during token exchange
+
+  // stored so we can use it during token exchange
+  String? _codeVerifier; 
 
   StreamSubscription? _linkSubscription;
 
