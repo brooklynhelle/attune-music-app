@@ -24,7 +24,7 @@ REQUIREMENTS
 
 A spotify account that you can log into (doesn't necessarily have to be yours)
 An iPhone OR mac computer
-Location sharing (when prompted) must be granted for the nearby users feature to work
+Location sharing (when prompted) must be granted for the nearby users feature to work. If user is not prompted, they should turn their location services on in settings.
 
 
 PROJECT LAYOUT/STRUCTURE

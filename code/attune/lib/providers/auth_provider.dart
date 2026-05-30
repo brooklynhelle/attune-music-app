@@ -228,6 +228,22 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // updates the user's bio
+  Future<void> updateBio(String bio) async {
+    if (_currentUser == null) return;
+    await _authService.updateBio(uid: _currentUser!.uid, bio: bio);
+    _currentUser = await _authService.fetchUser(_currentUser!.uid);
+    notifyListeners();
+  }
+
+   // updates the user's name
+    Future<void> updateName(String name) async {
+      if (_currentUser == null) return;
+      await _authService.updateName(uid: _currentUser!.uid, name: name);
+      _currentUser = await _authService.fetchUser(_currentUser!.uid);
+      notifyListeners();
+    }
+
   // sends a friend request to another user 
   Future<void> sendFriendRequest(String targetUid) async {
     if (_currentUser == null) {
