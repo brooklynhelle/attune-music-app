@@ -10,6 +10,7 @@ PURPOSE OF APP
 
 The purpose of our app is to foster community among people nearby eachother, like on college campuses, with similar music taste.  
 
+
 ABOUT THIS APP
 
 Attune addresses the difficulty of finding people with shared music taste in real life. After linking your Spotify account, Attune reads your top artists, tracks, and genres, then uses your location to surface nearby users with overlapping taste. You can view other users' profiles and send friend requests.

@@ -105,7 +105,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // UI
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.nearby)),
+      appBar: AppBar(
+        title: Text(
+          AppLocalizations.of(context)!.nearby,
+          style: const TextStyle(fontSize: 24),  
+        ),
+      ),
       body: _bodyHelper(user),
     );
   }
@@ -122,11 +127,14 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             CustomPaint(
-              size: Size(200, 200),
+              size: Size(300, 300),
               painter: MonsterPainter(),
             ),
             const SizedBox(height: 20),
-            Text(AppLocalizations.of(context)!.locationDisabled),
+            Text(
+              AppLocalizations.of(context)!.locationDisabled,
+              style: const TextStyle(fontSize: 18),
+            ),
           ],
         ),
       );
@@ -139,7 +147,10 @@ class _HomeScreenState extends State<HomeScreen> {
               painter: MonsterPainter(),
             ),
             const SizedBox(height: 20),
-            Text(AppLocalizations.of(context)!.allAlone),
+            Text(
+              AppLocalizations.of(context)!.allAlone,
+              style: const TextStyle(fontSize: 18),
+            ),
           ],
         ),
 );
@@ -158,11 +169,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     : null,
                 child: nearbyUser.pfp == null ? const Icon(Icons.person) : null,
               ),
-              title: Text(nearbyUser.name ?? nearbyUser.username),
+              title: Text(
+                nearbyUser.name ?? nearbyUser.username,
+                style: const TextStyle(fontSize: 20),
+                ),
               subtitle: Text(
                 nearbyUser.topArtists.isNotEmpty
                     ? nearbyUser.topArtists.first
                     : '',
+                style: const TextStyle(fontSize: 18),
               ),
               onTap: () => Navigator.push(
                 context,

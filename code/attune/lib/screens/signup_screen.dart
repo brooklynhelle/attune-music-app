@@ -41,7 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
   // then navigates back to home. Shows error message otherwise
   Future<void> _submit() async {
     setState(() => _errorMessage = null);
-    
+
     final user = await context.read<AuthProvider>().signUp(
       email: _emailController.text.trim(),
       password: _passwordController.text,
@@ -100,18 +100,25 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(height: 24), // spacing
             ElevatedButton(
               onPressed: _submit,
-              child: Text(AppLocalizations.of(context)!.signUp),
+              child: Text(
+                AppLocalizations.of(context)!.signUp,
+                style: const TextStyle(fontSize: 18),
+              ),
             ),
             if (_errorMessage != null) 
               Text(
                 _errorMessage!,
                 style: const TextStyle(
                   color: Colors.red,
+                  fontSize: 18,
                 ),
               ),
             TextButton(
               onPressed: () => Navigator.pushNamed(context, '/login'),
-              child: Text(AppLocalizations.of(context)!.alreadyHaveAccount),
+              child: Text(
+                AppLocalizations.of(context)!.alreadyHaveAccount,
+                style: const TextStyle(fontSize: 18),
+              ),
             ),
           ],
         ),

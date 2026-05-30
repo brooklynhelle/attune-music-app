@@ -42,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             // pfp, defaults to person icon if no value is given by user
             CircleAvatar(
-              radius: 50,
+              radius: 60,
               backgroundImage: auth.currentUser?.pfp != null
                   ? NetworkImage(auth.currentUser!.pfp!)
                   : null,
@@ -53,8 +53,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 12),
             TextField(
               controller: _pfpController,
+              style: const TextStyle(fontSize: 18),
               decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.profilePictureUrl,
+                hintText: 
+                AppLocalizations.of(context)!.profilePictureUrl,
+                hintStyle: const TextStyle(fontSize: 18),
               ),
             ),
             Padding(
@@ -63,7 +66,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onPressed: () => context.read<AuthProvider>().updatePfp(
                   _pfpController.text.trim(),
                 ),
-                child: Text(AppLocalizations.of(context)!.save),
+                child: Text(
+                  AppLocalizations.of(context)!.save,
+                  style: const TextStyle(fontSize: 18),
+                  ),
               ),
             ),
             // box for name, defaults to username 
@@ -77,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (auth.currentUser?.bio != null)
               Text(
                 auth.currentUser!.bio!,
-                style: const TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 18),
               ),
 
             // used if user updates name
@@ -120,12 +126,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ? Center(
                                 child: Text(
                                   AppLocalizations.of(context)!.noFriendsYet,
+                                  style: const TextStyle(fontSize: 18),  
                                 ),
                               )
                             : ListView.builder(
                                 itemCount: users.length,
                                 itemBuilder: (_, index) => ListTile(
-                                  title: Text(users[index].username),
+                                  title: Text(
+                                    users[index].username,
+                                    style: const TextStyle(fontSize: 18),  
+                                    ),
                                   trailing: IconButton(
                                     icon: const Icon(Icons.person_remove),
                                     onPressed: () => context
@@ -138,7 +148,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   );
                 },
-                child: Text(AppLocalizations.of(context)!.friends),
+                child: Text(
+                  AppLocalizations.of(context)!.friends,
+                  style: const TextStyle(fontSize: 18),  
+                  ),
               ),
             ),
             // friend request button
@@ -167,12 +180,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   AppLocalizations.of(
                                     context,
                                   )!.noFriendRequests,
+                                  style: const TextStyle(fontSize: 18),  
                                 ),
                               )
                             : ListView.builder(
                                 itemCount: users.length,
                                 itemBuilder: (context, index) => ListTile(
-                                  title: Text(users[index].username),
+                                  title: Text(
+                                    users[index].username,
+                                    style: const TextStyle(fontSize: 18),  
+                                    ),
                                   trailing: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -200,7 +217,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   );
                 },
-                child: Text(AppLocalizations.of(context)!.friendRequests),
+                child: Text(
+                  AppLocalizations.of(context)!.friendRequests,
+                  style: const TextStyle(fontSize: 18),
+                  ),
               ),
             ),
 
@@ -229,7 +249,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ? const Icon(Icons.person)
                         : null,
                   ),
-                  title: Text(artist.name),
+                  title: Text(
+                    artist.name,
+                    style: const TextStyle(fontSize: 18),
+                    ),
                 );
               },
             ),
@@ -259,8 +282,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ? const Icon(Icons.person)
                         : null,
                   ),
-                  title: Text(track.name),
-                  subtitle: Text(track.artistName),
+                  title: Text(
+                    track.name,
+                    style: const TextStyle(fontSize: 20),
+                    ),
+                  subtitle: Text(
+                    track.artistName,
+                    style: const TextStyle(fontSize: 18),
+                    ),
                 );
               },
             ),
@@ -275,7 +304,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
               ),
-              child: Text(AppLocalizations.of(context)!.signOut),
+              child: Text(
+                AppLocalizations.of(context)!.signOut,
+                style: const TextStyle(fontSize: 18),
+              ),
             ),
           ],
         ),

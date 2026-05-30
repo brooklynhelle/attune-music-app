@@ -41,7 +41,7 @@ class SpotifyConnectScreen extends StatelessWidget {
                 'find your people through music',
                 style: TextStyle(
                   color: Color(0xFF888888),
-                  fontSize: 14,
+                  fontSize: 18,
                   letterSpacing: 1.5,
                 ),
                 textAlign: TextAlign.center,
@@ -74,7 +74,7 @@ class SpotifyConnectScreen extends StatelessWidget {
                 'Connect your Spotify to see your top artists, tracks, and find nearby listeners who share your taste.',
                 style: TextStyle(
                   color: Color(0xFFAAAAAA),
-                  fontSize: 15,
+                  fontSize: 18,
                   height: 1.6,
                 ),
                 textAlign: TextAlign.center,
@@ -111,7 +111,7 @@ class SpotifyConnectScreen extends StatelessWidget {
                       : Text(
                           AppLocalizations.of(context)!.connectSpotify,
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 20,
                             fontWeight: FontWeight.w600,
                             letterSpacing: 0.5,
                           ),
@@ -127,7 +127,7 @@ class SpotifyConnectScreen extends StatelessWidget {
                   AppLocalizations.of(context)!.somethingWentWrong,
                   style: TextStyle(
                     color: Color(0xFFFF4444),
-                    fontSize: 13,
+                    fontSize: 18,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -141,7 +141,7 @@ class SpotifyConnectScreen extends StatelessWidget {
                   AppLocalizations.of(context)!.signOut,
                   style: TextStyle(
                     color: Color(0xFF555555),
-                    fontSize: 13,
+                    fontSize: 18,
                   ),
                 ),
               ),

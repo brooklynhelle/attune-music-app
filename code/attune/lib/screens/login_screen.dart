@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 labelText: AppLocalizations.of(context)!.email
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 18),
             TextField(
               controller: _passwordController,
               obscureText: true,
@@ -78,18 +78,26 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: _submit,
-              child: Text(AppLocalizations.of(context)!.signIn),
+              child: Text(
+                AppLocalizations.of(context)!.signIn,
+                style: const TextStyle(fontSize: 18),
+              ),
             ),
             if (_errorMessage != null) 
               Text(
                 _errorMessage!,
                 style: const TextStyle(
+                  fontSize: 20,
                   color: Colors.red,
                 ),
               ),
             TextButton(
               onPressed: () => Navigator.pushNamed(context, '/signup'),
-              child: Text(AppLocalizations.of(context)!.noAccount),
+              child: 
+              Text(
+                AppLocalizations.of(context)!.noAccount,
+                style: const TextStyle(fontSize: 18),
+              ),
             ),
           ],
         ),
