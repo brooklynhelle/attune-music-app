@@ -69,11 +69,11 @@ class AuthProvider extends ChangeNotifier {
       // if no user exists yet/login fails, current user is null
       if (user == null) {
         _currentUser = null;
-      }
-      // otherwise, set current user
-      else {
-        _currentUser = await _authService.fetchUser(user.uid);
-      }
+        
+        // set current user
+      } else {
+        _currentUser ??= await _authService.fetchUser(user.uid);
+      }  
       // tells the widgets consuming this provider to rebuild bc auth state changed
       notifyListeners();
     });

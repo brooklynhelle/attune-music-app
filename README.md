@@ -158,3 +158,11 @@ https://api.flutter.dev/flutter/material/MaterialPageRoute-class.html?_gl=1*og0w
 To get the username for friendrequests, I used FutureBuilder. It allows me
 to wait for Firestore results to come back so I can use them instead of the users uid:
 https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html
+
+I used mounted and popUntil and isFirst to navigate to the main screen after sign up/log in:
+https://api.flutter.dev/flutter/widgets/State/mounted.html
+mounted checks to see if the widget is still on the screen once submit finishes
+https://api.flutter.dev/flutter/widgets/Navigator/popUntil.html
+popUntil pops screens from navigation stack until isFirst is true
+https://api.flutter.dev/flutter/widgets/Route/isFirst.html
+returns true when the route is the screen on the bottom of the navigation stack

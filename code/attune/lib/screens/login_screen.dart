@@ -39,6 +39,11 @@ class _LoginScreenState extends State<LoginScreen> {
       email: _emailController.text.trim(),
       password: _passwordController.text,
     );
+    // navigate back to root so Consumer in main.dart can redirect
+    if (success && mounted) {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    }
+
     // if the login failed & the wigdet is still on the screen, let user know and try again
     if (!success && mounted) {
       setState(() {
