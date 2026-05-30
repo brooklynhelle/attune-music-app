@@ -28,6 +28,9 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
+        iconSize: 30,
+        selectedLabelStyle: const TextStyle(fontSize: 18),
+        unselectedLabelStyle: const TextStyle(fontSize: 18),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
