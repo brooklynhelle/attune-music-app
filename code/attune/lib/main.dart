@@ -74,6 +74,7 @@ class MainApp extends StatelessWidget {
 
           // i just learned this so there are definitely some bug
           builder: (context, auth, _) {
+            print('isAuthenticated: ${auth.isAuthenticated}, isSpotifyConnected: ${auth.isSpotifyConnected}');
             if (auth.isAuthenticated && auth.isSpotifyConnected) {
               return const MainScreen();
             } else if (auth.isAuthenticated && !auth.isSpotifyConnected) {

@@ -52,7 +52,10 @@ class _SignupScreenState extends State<SignupScreen> {
         // user denied location - app still runs, just doesn't show nearby users... erm
         // this is here so the app doesnt crash if user denies permissions
       }
-      
+      // navigate back to root so Consumer in main.dart can redirect
+      if (mounted) {
+        Navigator.of(context).popUntil((route) => route.isFirst);
+      }
     }
     // if the sign up failed & the wigdet is still on the screen, let user know and try again
     if (user == null && mounted) { // mounted == widget is still on screen (safety check)

@@ -64,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } // otherwise tell user there was an error and set the state accordingly
     catch (e) {
-      print('${AppLocalizations.of(context)!.errorLoadingUsers}$e');
       setState(
         () => _loading = false,
       ); // if we add a loading spinner this stops it
@@ -105,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // UI
     return Scaffold(
-      appBar: AppBar(title: Text('${AppLocalizations.of(context)!.nearby}')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.nearby)),
       body: _bodyHelper(user),
     );
   }
@@ -126,8 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
               painter: MonsterPainter(),
             ),
             const SizedBox(height: 20),
-            Text('${AppLocalizations.of(context)!.locationDisabled}'),
-      
+            Text(AppLocalizations.of(context)!.locationDisabled),
           ],
         ),
       );
@@ -140,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
               painter: MonsterPainter(),
             ),
             const SizedBox(height: 20),
-            Text('${AppLocalizations.of(context)!.allAlone}'),
+            Text(AppLocalizations.of(context)!.allAlone),
           ],
         ),
 );

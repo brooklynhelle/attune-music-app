@@ -22,6 +22,8 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Attune needs your location to show you nearby users.</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
