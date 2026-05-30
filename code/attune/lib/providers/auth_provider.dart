@@ -157,7 +157,7 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       return user;
     } // otherwise, error
-    catch (e, stackTrace) {
+    catch (e) {
       _hasError = true;
       notifyListeners();
       return null;
@@ -196,10 +196,10 @@ class AuthProvider extends ChangeNotifier {
         );
         _currentUser = await _authService.fetchUser(_currentUser!.uid);
       }
+      _isSpotifyConnectedThisTime = true;
     } catch (e) {
       _hasError = true;
     } finally {
-      _isSpotifyConnectedThisTime = true;
       _dataLoading = false;
       notifyListeners();
     }

@@ -1,21 +1,17 @@
 import 'dart:io';
 import 'package:attune/screens/main_screen.dart';
-import 'package:attune/screens/profile_screen.dart';
 import 'package:attune/screens/spotify_connect_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_links_desktop/uni_links_desktop.dart';
 import 'providers/auth_provider.dart';
 import 'package:provider/provider.dart';
-import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/app_localizations.dart';
 import 'providers/position_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'widgets/monster_painter.dart';
 
 // internationalizing shouldnt be that hard...
 
@@ -74,7 +70,6 @@ class MainApp extends StatelessWidget {
 
           // i just learned this so there are definitely some bug
           builder: (context, auth, _) {
-            print('isAuthenticated: ${auth.isAuthenticated}, isSpotifyConnected: ${auth.isSpotifyConnected}');
             if (auth.isAuthenticated && auth.isSpotifyConnected) {
               return const MainScreen();
             } else if (auth.isAuthenticated && !auth.isSpotifyConnected) {
