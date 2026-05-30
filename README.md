@@ -136,22 +136,9 @@ REFLECTION:
 Google told me this would help with having stuff happen in my build class before and after dependency changes, so I used it 
 
 CONSULTED: 
+SpanishDictionary.com
 REFLECTION:
-
-CONSULTED: 
-REFLECTION:
-
-CONSULTED: 
-REFLECTION:
-
-CONSULTED: 
-REFLECTION:
-
-CONSULTED: 
-REFLECTION:
-
-CONSULTED: 
-REFLECTION:
+Used this to internationalize
 
 CONSULTED: 
 REFLECTION:
