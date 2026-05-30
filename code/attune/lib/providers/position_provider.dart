@@ -5,22 +5,18 @@ import '../providers/auth_provider.dart';
 
 
 // This is the PositionProvider class from Food Finder. 
-// Provides user's location, if permissions are given. 
+// Manages the device's GPS location and keeps it in sync with Firestore.
 class PositionProvider extends ChangeNotifier {
-    // PositionProvider - the geolocator library (copied in) handles the talking to the GPS. 
-
-    //  I just need the provider layer, which determinePosition bridges between my 
-    //    state fields (_lat, _long, etc) and the geolocator library
     
     double _latitude = 0.0;
     double _longitude = 0.0;
 
-    // reference to AuthProvider so we can write a user's location to 
-    // firestore whenever we get an update from the GPS API
+    // reference to AuthProvider so we can write a user's location to Firestore
     AuthProvider? _authProvider;
 
     // whether positional data has been loaded or not
     bool posKnown = false;
+
     // if there's an error with loading data
     bool hasError = false;
 
@@ -29,8 +25,7 @@ class PositionProvider extends ChangeNotifier {
       notifyListeners();
   }
 
-  // positionKnown getter 
-  // good for edge case where nothing loads bc user denied permissions
+  // returns true if we have a valid position, false otherwise
   bool positionKnown() { 
     if (posKnown) {
       return true;
@@ -39,18 +34,17 @@ class PositionProvider extends ChangeNotifier {
   }
 
   // this is here so we can call it from main to connect position provider to auth provider
-  // bc we need to bc we have the location and also we need auth and then firestore to know abt it
+  // bc we need to bc we have the location and also we need auth -> firestore to know abt it
   void setAuthProvider(AuthProvider auth) {
     _authProvider = auth;
   }
 
-  // getter for latitude except I remember dart syntax now
+  // getters for lat & long 
   double get latitude => _latitude;
-
-  // getter for longitude
   double get longitude => _longitude;
 
-  // Creates a PositionProvider that loads in user's location data, which routinely updates 
+  // Creates a PositionProvider that loads in user's location data, fetches upon construction and
+  // then updates every 60 seconds
   PositionProvider() {
     // initial call so you dont have to wait for timer 
     determinePosition().then((position) {
@@ -87,7 +81,6 @@ class PositionProvider extends ChangeNotifier {
   }
 
     // Determine the current position of the device.
-    // 
     // When the location services are not enabled or permissions
     // are denied the `Future` will return an error.
     Future<Position> determinePosition() async {

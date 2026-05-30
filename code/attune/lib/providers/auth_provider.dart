@@ -4,14 +4,15 @@ import '../services/auth_service.dart';
 import '../models/user_model.dart';
 
 // This is Firebase Auth Provider; handles sign up/in/out & keeps track of user
+// Makes the current user, Spotify data, and auth state available to the widget tree. 
 class AuthProvider extends ChangeNotifier {
+
   // instance of AuthService to do stuff with
   final AuthService _authService = AuthService();
-
   // instance of SpotifyAuth to get Spotify data with
   final SpotifyAuth _spotifyAuth = SpotifyAuth();
 
-  // are we waiting on a network call to finish?
+  // true while a network call is in progress
   bool _dataLoading = false;
 
   // keeps track of whether or not there's been an error
@@ -26,7 +27,7 @@ class AuthProvider extends ChangeNotifier {
   // kinda serves as an "is spotify connected' field
   bool get isSpotifyConnected => _isSpotifyConnectedThisTime;
 
-  // Spotify data
+  // in-memory Spotify data for the current user
   SpotifyUser? _spotifyUser;
   List<SpotifyArtist> _topArtists = [];
   List<SpotifyTrack> _topTracks = [];
@@ -45,7 +46,6 @@ class AuthProvider extends ChangeNotifier {
   bool get dataLoading => _dataLoading;
 
   // returns whether or not the current user is authenticated
-  // --> should the program show the home vs login screen
   bool get isAuthenticated => _currentUser != null;
 
   // returns user's Spotify profile
@@ -60,10 +60,9 @@ class AuthProvider extends ChangeNotifier {
   // returns the user's top Spotify genres
   List<String> get topGenres => _topGenres;
 
-  // provider for authentication
-  // This updates _currentUser according to auth state changes (someone signs up/in/out)
-  // when someone signs in, Firebase emits a User which we use to fetch their UserModel, _currentUser gets set
-  // when someone signs out, Firebase emits null so then _currentUser gets set to null
+  // Interacts with Firebase auth state on construction
+  // Automatically updates the current user whenever someone signs in or out, 
+  // notifies listeners so the UI builds according to auth state
   AuthProvider() {
     _authService.authStateChanges.listen((user) async {
       // if no user exists yet/login fails, current user is null
@@ -79,7 +78,7 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
-  // signs user out using the authentication service
+  // signs user out, clears data from that user
   Future<void> signOut() async {
     _spotifyUser = null;
     _topArtists = [];
@@ -89,18 +88,14 @@ class AuthProvider extends ChangeNotifier {
     await _authService.signOut();
   }
 
-  // TODO: FIX EVERYTHING WEIRD YOU DID WHEN DEBUGGING THE AUTH
-
-  // signs user in using the authentication service
-  // with password and username given, of course
-  // returns a bool so we know if login was successful
+  // signs user in using email and password, returns true on success, false otherwise
   Future<bool> signIn({required String email, required String password}) async {
     try {
       // if login succeeds, no issues yay
       await _authService.signIn(email: email, password: password);
 
-      // signing in wouldnt work until I manually updated the currentUser this way instead of
-      // relying on firebase to actually work
+      // sometimes firebase fails so manually signing user in here can help 
+      // minimize data load failures
       final firebaseUser = await _authService.getCurrentUser();
       if (firebaseUser != null) {
         _currentUser = await _authService.fetchUser(firebaseUser.uid);
@@ -126,25 +121,20 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  // updates user's location, like after permissions are enabled
+  // updates user's current location in memory & in Firestore whenever GPS coords change
   Future<void> updateLocation(double lat, double long) async {
     if (_currentUser == null) return;
     await _authService.updateLocation(_currentUser!.uid, lat, long);
     _currentUser!.latitude = lat;
     _currentUser!.longitude = long;
     notifyListeners();
-    // any widget watching AuthProvider and displaying location-based info
-    // needs to know so they can rebuild
   }
 
-  // signs user in using the authentication service
-  // with password and username given, of course
-  // nullable bc user might not exist yet/be signed in/up
+  // Creates new account with the given info, returns a new UserModel on success, null on failure
   Future<UserModel?> signUp({
     required String email,
     required String password,
     required String username,
-    String university = '',
   }) async {
     try {
       final user = await _authService.signUp(
@@ -164,8 +154,8 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  // launches Spotify OAuth login, then gets top artists/tracks/genres
-  // this gets called after the user has signed up
+  // launches Spotify OAuth login, then gets user's top music data.
+  // Saves spotify data to Firestore and marks Spotify as connected
   Future<void> connectSpotify() async {
     try {
       _dataLoading = true;
@@ -205,7 +195,8 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  // refreshes top artists/tracks/genres from Spotify
+  // Re-fetches top artists/tracks from Spotify, if valid connection exists
+  // available for future/anticipated use 
   Future<void> refreshSpotifyData() async {
     if (!_spotifyAuth.isConnected) return;
     try {
@@ -229,7 +220,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  // updates the user's profile picture URL and refreshes the current user
+  // updates the user's profile picture
   Future<void> updatePfp(String pfp) async {
     if (_currentUser == null) return;
     await _authService.updatePfp(uid: _currentUser!.uid, pfp: pfp);
@@ -237,7 +228,7 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // sends a friend request to another user
+  // sends a friend request to another user 
   Future<void> sendFriendRequest(String targetUid) async {
     if (_currentUser == null) {
       return;
@@ -248,7 +239,7 @@ class AuthProvider extends ChangeNotifier {
     );
   }
 
-  // accepts a friend request from another user
+  // accepts an incoming friend request from another user
   Future<void> acceptFriendRequest(String requesterUid) async {
     if (_currentUser == null) {
       return;
@@ -286,6 +277,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   // fetches the UserModel for each uid and returns them as a list
+  // used to display friend lists and requests by name
   Future<List<UserModel>> userModelOfUser(List<String> uids) async {
     final results = await Future.wait(
       uids.map((uid) => _authService.fetchUser(uid)),
@@ -293,13 +285,4 @@ class AuthProvider extends ChangeNotifier {
     return results.whereType<UserModel>().toList();
   }
 
-  // // search for users by username
-  // Future<List<UserModel>> searchUsers(String query) async {
-  //   return await _authService.searchUsers(query);
-  // }
-
-  // // search for artists
-  // Future<List<UserModel>> searchUsersByArtist(String artist) async {
-  //   return await _authService.searchUsersByArtist(artist);
-  // }
 }

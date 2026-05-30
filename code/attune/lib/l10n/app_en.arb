@@ -23,5 +23,11 @@
   "locationDisabled": "Enable location sharing to see other users near you",
   "allAlone": "No users within 20 miles",
   "signOut": "Sign out",
-  "requestSent": "Request Sent"
+  "requestSent": "Request Sent",
+  "locationDisabled": "Location services are disabled.",
+  "home": "Home",
+  "profile": "Profile",
+  "connectSpotify": "Connect Spotify",
+  "somethingWentWrong": "Something went wrong. Please try again.",
+  "signOut": "Sign out"
 }

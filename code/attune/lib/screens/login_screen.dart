@@ -4,9 +4,7 @@ import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 
 
-// The login screen where you sign in, bare bones rn 
-// Should navigate to home screen when complete
-// Also has button that should navigate to sign up page; "no account? Sign up"
+// Sign in screen, navigates back to main on success to prompt user for spotify link & location
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -22,7 +20,8 @@ class _LoginScreenState extends State<LoginScreen> {
   // object for password that tracks what user enters into text field
   final _passwordController = TextEditingController();
 
-  // nullable message that shows up if login failed
+  // nullable message that shows up if login failed - resets after each 
+  // sign-in attempt
   String? _errorMessage;
 
   // dispose to avoid memory leaks and what not
@@ -33,7 +32,9 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  // attempts sign in / other redirects or shows an error message
   Future<void> _submit() async {
+    setState(() => _errorMessage = null); // clear any previous error
     final success = await context.read<AuthProvider>().signIn(
       email: _emailController.text.trim(),
       password: _passwordController.text,

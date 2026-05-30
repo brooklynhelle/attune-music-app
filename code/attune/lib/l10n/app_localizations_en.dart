@@ -73,8 +73,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nearby => 'Nearby: ';
 
   @override
-  String get locationDisabled =>
-      'Enable location sharing to see other users near you';
+  String get locationDisabled => 'Location services are disabled.';
 
   @override
   String get allAlone => 'No users within 20 miles';
@@ -84,4 +83,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get requestSent => 'Request Sent';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get connectSpotify => 'Connect Spotify';
+
+  @override
+  String get somethingWentWrong => 'Something went wrong. Please try again.';
 }

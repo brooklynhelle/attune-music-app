@@ -9,6 +9,8 @@ import '../l10n/app_localizations.dart';
 import '../widgets/monster_painter.dart';
 
 // The home screen where you go after you log in and link your spotify
+// Displays a list of users within 20 miles of the current user, if location
+// is known. Listens to AuthProvider so list refreshes when location updates
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -17,15 +19,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // get instance of auth service to call the method that gets nearby users (from auth_service.dart)
+
+  // get instance of auth service to call the method that gets nearby users 
   final AuthService _authService = AuthService();
+
   // list of nearby users, filtered by location
   List<UserModel> _nearbyUsers = [];
-  // whether or not list of nearby users data loaded successfully, for user experience (fancy!)
+
+  // whether or not list of nearby users data loaded successfully
   bool _loading = true;
-  //
+
+  // reference to AuthProvider so we can dispose later 
   AuthProvider? _authProvider;
-  //
+
+  // helps with not duplicating listeners in didChangeDependencies
   bool _listenerAdded = false;
 
   @override
@@ -40,22 +47,20 @@ class _HomeScreenState extends State<HomeScreen> {
     final auth = context.read<AuthProvider>();
     final user = auth.currentUser;
 
-    // make sure we have user's location so we can load nearby users
+    // return early if we don't have user's location -> can't do anything with it
     if (user?.latitude == null || user?.longitude == null) {
       setState(() => _loading = false);
       return;
     }
 
     try {
-      // if user hasn't enabled location, stop loading and return early bc not fetching anything
-      // dont freaking forget that everything is nullable
       final users = await _authService.getNearbyUsers(
         currentUid: user!.uid,
         lat: user.latitude!,
         long: user.longitude!,
       );
-      // now call firestore to get nearby users, pass in current user's uid and coords
-      // if the load fails we need to handle it gracefully! as Tal would say
+      // now query Firestore to get nearby users, pass in current user's uid and coords
+      // if the load fails we need to handle it gracefully as Tal would say
       setState(() {
         _nearbyUsers = users;
         _loading =
@@ -69,6 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+
+  // Adds a listener to AuthProvider so _loadNearbyUsers re-runs when the auth state changes
+  // like after a location update
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -79,24 +87,18 @@ class _HomeScreenState extends State<HomeScreen> {
       _listenerAdded = true;
     }
 
-    // whenever the auth provider calls notifyListeners(), like after location updates,
-    // re load nearby users so the list refreshes based on user's new location
-
     _loadNearbyUsers();
   }
 
-  // dispose to avoid memory leaks and what not
+  // removes listener to avoid memory leaks and what not
   @override
   void dispose() {
-    //
     _authProvider?.removeListener(_loadNearbyUsers);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // here we ARE in a builder so we use .watch instead of .read
-    // idk why it took me so long to realize the difference
     final auth = context.watch<AuthProvider>();
     final user = auth.currentUser;
     context.watch<PositionProvider>();
@@ -111,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
   // This helps the UI know what to display based on the information available.
   // coulda used a bunch of ternary operators in the widget tree but this is nicer
   Widget _bodyHelper(UserModel? user) {
-    // if data is still loading, show a loading icon or something for user experience
+    // if data is still loading, shows our little mascot to keep you company 
     if (_loading) {
       return Center(child: CircularProgressIndicator()); // classic
     } else if (user?.latitude == null) {

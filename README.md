@@ -15,7 +15,7 @@ ABOUT THIS APP
 Attune addresses the difficulty of finding people with shared music taste in real life. After linking your Spotify account, Attune reads your top artists, tracks, and genres, then uses your location to surface nearby users with overlapping taste. You can view other users' profiles and send friend requests.
 
 
-HOW TO BUILD AND RUN THE APP
+HOW TO BUILD & RUN THE APP
 
 To build & run the app, cd code/attune, then run flutter pub get, and then either run flutter run -d macos OR flutter run with the target being your phone (either wirelessly connected or connected via a cable to your machine). Once the build builds and the app launches, how to sign in should be obvious. Unfortunately, the amount of issues we ran into when trying to configure the app for other platforms would take more time to figure out than we had available to us when working on this project. 
 
@@ -45,7 +45,7 @@ login_screen.dart --> email/password sign in screen. Displays error if sign in f
 signup_screen.dart --> account creation screen. Displays error if sign in fails, redirects to Spotify account link screen if login was successful, then triggers location permission request 
 home_screen.dart --> displays nearby users within 20 miles, listens to both Auth and Position provider 
 main_screen.dart --> bottom nav bar that allows you to switch between home and profile screens
-profile_screen.dart --> the current user's profile, shows profile picture and the option to update your pfp (only add-able via url), top artists and tracks, friends and friend requests, and the sign out button. 
+user_profile_screen.dart --> the current user's profile, shows profile picture and the option to update your pfp (only add-able via url), top artists and tracks, friends and friend requests, and the sign out button. 
 spotify_connect_screen.dart --> shown after a successful sign in/up, prompts user to link their Spotify account
 
 lib/widgets/

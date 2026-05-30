@@ -3,23 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user_model.dart';
 import 'dart:math';
 
-// Talks to Firebase Auth (to sign up/in/out)
-// handles Firebase Authentication and Firestore user doc creation.
-// Nothing should call this except AuthProvider I'm pretty sure
+// Handles all Firebase Auth and Firestore operations.
 class AuthService {
-  // handles login/signup
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // reads/writes user docs since firebase only stores user's email and password
-  // but we store more than that (username, topGenres, etc)
+  // reads/writes user docs in Firestore 
+  // since it only stores user's email and password by default
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // This is a stream that listens to auth state changes.
-  // Lets the app automatically know when someone logs in or out
+  // stream that lets auth state know whenever auth state changes (sign up/in/out)
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
-  // this updates the user's location when they enable permissions
-  // user is identified through their firebase-given uid
+   // writes the user's current GPS coordinates to their Firestore document
   Future<void> updateLocation(String uid, double lat, double long) async {
     await _db.collection('users').doc(uid).update({
       'latitude': lat,
@@ -32,8 +27,7 @@ class AuthService {
     return _auth.currentUser;
   }
 
-  // self explanatory
-  // async bc its making a network call
+   // creates a new Firebase Auth account and a corresponding Firestore user doc
   Future<UserModel> signUp({
     required String username,
     required String password,
@@ -42,7 +36,7 @@ class AuthService {
     List<String> topGenres = const [],
     String? spotifyId,
   }) async {
-    // call firebase to complete the acc - cred is Firebase's response after creating new account
+    // call firebase to complete the acc - cred is Firebase's response after creating new acc
     final cred = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
@@ -67,25 +61,24 @@ class AuthService {
     return newUser;
   }
 
-  // self explanatory
-  // async bc its making a network call
+  // signs the user in with email and password
   Future<void> signIn({required String email, required String password}) async {
     // AuthProvider will get the user via the auth state stream
     await _auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
-  // creates user so that firebase saves info so you can actually log in
+  // writes a UserModel to Firestore, used as a fallback during sign in
+  // if fetchUser returns null
   Future<void> createUser(UserModel user) async {
     await _db.collection('users').doc(user.uid).set(user.toMap());
   }
 
-  // self explanatory
-  // async bc its making a network call
+  // signs the current user out
   Future<void> signOut() async {
     await _auth.signOut();
   }
 
-  // goes to Firestore and returns the UserModel for the given uid
+  // goes to Firestore and returns the UserModel for the given uid, null if no user exists for uid
   Future<UserModel?> fetchUser(String uid) async {
     final doc = await _db.collection('users').doc(uid).get();
     // if the user doesnt exist, return null

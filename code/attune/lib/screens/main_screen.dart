@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home_screen.dart';
 import 'profile_screen.dart';
+import '../l10n/app_localizations.dart';
 
 // main screen that has the bottom nav bar no matter what screen you're on
 class MainScreen extends StatefulWidget {
@@ -14,7 +15,7 @@ class _MainScreenState extends State<MainScreen> {
   // tracks which screen is currently selected
   int _currentIndex = 0;
 
-  // the screens
+  // the screens accessible via mainscreen nav bar
   final List<Widget> _screens = [
     const HomeScreen(),
     const ProfileScreen(),
@@ -27,14 +28,14 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
-        items: const [
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: AppLocalizations.of(context)!.home,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profile',
+            label: AppLocalizations.of(context)!.profile,
           ),
         ],
       ),

@@ -5,9 +5,8 @@ import '../l10n/app_localizations.dart';
 import '../providers/position_provider.dart';
 
 
-// The login screen where you sign in, bare bones rn 
-// Should navigate to home screen when complete
-// Also has button that should navigate to sign up page; "no account? Sign up"
+// Account creation screen, triggers location permission request after a successful sign in/up
+// then navigates back to home screen
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -38,21 +37,24 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
+  // attempts account creation, requests location permission on success,
+  // then navigates back to home. Shows error message otherwise
   Future<void> _submit() async {
+    setState(() => _errorMessage = null);
+    
     final user = await context.read<AuthProvider>().signUp(
       email: _emailController.text.trim(),
       password: _passwordController.text,
       username: _usernameController.text,
     );
     if (user != null) {
-      // trigger location permission request - add note: app is pointless w/o location enabled
+      // trigger location permission request 
       try {
         await context.read<PositionProvider>().determinePosition();
       } catch (e) {
-        // user denied location - app still runs, just doesn't show nearby users... erm
-        // this is here so the app doesnt crash if user denies permissions
+        // so the app doesnt crash if user denies permissions
       }
-      // navigate back to root so Consumer in main.dart can redirect
+      // navigate back to root for redirect
       if (mounted) {
         Navigator.of(context).popUntil((route) => route.isFirst);
       }

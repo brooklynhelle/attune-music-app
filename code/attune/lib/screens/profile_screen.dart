@@ -4,6 +4,9 @@ import 'package:attune/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
+// The current user's profile screen.
+// Shows profile picture, name, friends, friend requests, top artists, top tracks, and sign out.
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -12,6 +15,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
+  // controlls the profile picture URL input field
   final _pfpController = TextEditingController();
 
   @override
@@ -29,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // pfp, defaults to person icon if no value is given by user
             CircleAvatar(
               radius: 50,
               backgroundImage: auth.currentUser?.pfp != null
@@ -54,13 +60,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Text(AppLocalizations.of(context)!.save),
               ),
             ),
-            // box for name
+            // box for name, defaults to username 
             const SizedBox(height: 20),
             Text(
               auth.currentUser?.name ?? auth.currentUser?.username ?? '',
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            // box for bio
+            // box for bio, optional profile addition, only shown if set by user
             const SizedBox(height: 25),
             if (auth.currentUser?.bio != null)
               Text(
@@ -233,6 +239,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               },
             ),
 
+            // sign out button
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () async {

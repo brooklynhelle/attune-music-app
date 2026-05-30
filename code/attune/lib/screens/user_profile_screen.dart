@@ -4,6 +4,10 @@ import 'package:attune/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+
+// Profile screen for another user, accessed by tapping them in the nearby users list.
+// Shows their profile picture, name, bio, and top artists.
+// Allows sending a friend request if not already friends.
 class UserProfileScreen extends StatefulWidget {
   final UserModel user;
 
@@ -14,12 +18,14 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+
+  // true if a friend request has already been sent to this user
   bool _friendRequestSent = false;
 
   @override
   void initState() {
     super.initState();
-    // check if we already sent a request
+    // check on load; whether or not we had already sent a request before
     final currentUid = context.read<AuthProvider>().currentUser?.uid;
     if (currentUid != null && widget.user.friendRequests.contains(currentUid)) {
       _friendRequestSent = true;
@@ -28,7 +34,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isFriend = context.watch<AuthProvider>().currentUser?.friends.contains(widget.user.uid) ?? false;
+    // watch so the button updates if friend status updates
+    final isFriend = context.watch<AuthProvider>().currentUser?.
+      friends.contains(widget.user.uid) ?? false;
     return Scaffold(
       appBar: AppBar(title: Text(widget.user.username)),
       body: SingleChildScrollView(
@@ -44,13 +52,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
             const SizedBox(height: 20),
 
-            // name
+            // name, defaults to username
             Text(
               widget.user.name ?? widget.user.username,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
-            // bio
+            // bio, optional, only shown if set by user
             if (widget.user.bio != null)
               Padding(
                 padding: const EdgeInsets.all(10),
@@ -87,7 +95,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: widget.user.topArtists.length,
               itemBuilder: (_, index) =>
-                  ListTile(title: Text(widget.user.topArtists[index], textAlign: TextAlign.center,)),
+                  ListTile(title: Text(widget.user.topArtists[index], textAlign: 
+                    TextAlign.center,)),
             ),
           ],
         ),

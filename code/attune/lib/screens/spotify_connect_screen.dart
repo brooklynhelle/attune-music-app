@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth_provider.dart';
+import '../l10n/app_localizations.dart';
 
-// screen to show after signup to connect Spotify before user gets to the home screen
+// Shown after sign in/up when Spotify hasn't been connected yet.
+// Prompts user to link their Spotify account before entering the app.
 class SpotifyConnectScreen extends StatelessWidget {
   const SpotifyConnectScreen({super.key});
 
@@ -106,8 +108,8 @@ class SpotifyConnectScreen extends StatelessWidget {
                             color: Colors.black,
                           ),
                         )
-                      : const Text(
-                          'Connect Spotify',
+                      : Text(
+                          AppLocalizations.of(context)!.connectSpotify,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -121,8 +123,8 @@ class SpotifyConnectScreen extends StatelessWidget {
 
               // error message if needed
               if (auth.hasError)
-                const Text(
-                  'Something went wrong. Please try again.',
+                Text(
+                  AppLocalizations.of(context)!.somethingWentWrong,
                   style: TextStyle(
                     color: Color(0xFFFF4444),
                     fontSize: 13,
@@ -135,8 +137,8 @@ class SpotifyConnectScreen extends StatelessWidget {
               // to sign out
               TextButton(
                 onPressed: () => context.read<AuthProvider>().signOut(),
-                child: const Text(
-                  'Sign out',
+                child: Text(
+                  AppLocalizations.of(context)!.signOut,
                   style: TextStyle(
                     color: Color(0xFF555555),
                     fontSize: 13,

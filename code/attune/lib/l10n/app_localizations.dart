@@ -223,7 +223,7 @@ abstract class AppLocalizations {
   /// No description provided for @locationDisabled.
   ///
   /// In en, this message translates to:
-  /// **'Enable location sharing to see other users near you'**
+  /// **'Location services are disabled.'**
   String get locationDisabled;
 
   /// No description provided for @allAlone.
@@ -243,6 +243,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Request Sent'**
   String get requestSent;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @connectSpotify.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect Spotify'**
+  String get connectSpotify;
+
+  /// No description provided for @somethingWentWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get somethingWentWrong;
 }
 
 class _AppLocalizationsDelegate
