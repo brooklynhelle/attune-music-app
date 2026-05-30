@@ -111,6 +111,16 @@ class AuthService {
     await _db.collection('users').doc(uid).update({'pfp': pfp});
   }
 
+  // updates the user's bio in Firestore
+  Future<void> updateBio({required String uid, required String bio}) async {
+    await _db.collection('users').doc(uid).update({'bio': bio});
+  }
+
+  // updates the user's name in Firestore
+  Future<void> updateName({required String uid, required String name}) async {
+    await _db.collection('users').doc(uid).update({'name': name});
+  }
+
   // sends a friend request, adds current user's uid to the other user's friendRequests list
   Future<void> sendFriendRequest({
     required String currentUid,

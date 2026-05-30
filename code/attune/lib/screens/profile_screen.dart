@@ -19,6 +19,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   // controlls the profile picture URL input field
   final _pfpController = TextEditingController();
 
+  // the user's bio
+  String? _bioInput;
+
+  // the user's name
+  String? _nameInput;
+
   @override
   void dispose() {
     _pfpController.dispose();
@@ -73,6 +79,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 auth.currentUser!.bio!,
                 style: const TextStyle(fontSize: 15),
               ),
+
+            // used if user updates name
+            TextField(
+              onChanged: (value) => _nameInput = value,
+              decoration: const InputDecoration(hintText: 'Change Name'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.read<AuthProvider>().updateName(_nameInput ?? ''),
+              child: const Text('Save'),
+            ),
+
+            // used if user updates bio
+            TextField(
+              onChanged: (value) => _bioInput = value,
+              decoration: const InputDecoration(hintText: 'Bio'),
+            ),
+            ElevatedButton(
+              onPressed: () => context.read<AuthProvider>().updateBio(_bioInput ?? ''),
+              child: const Text('Save'),
+            ),
 
             // friends button
             const SizedBox(height: 15),
