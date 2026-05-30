@@ -31,7 +31,16 @@ j) 1
 Tester #2
 40 year old female
 
-
+a) 5
+b) 1
+c) 5
+d) 1
+e) 5
+f) 1
+g) 5
+h) 1
+i) 5
+j) 1
 
 Tester #3
 
