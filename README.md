@@ -6,10 +6,53 @@ Once you start adding things to the `code` and `docs` directories, delete the fi
 
 # Documentation
 
-I had to change the platform configuration to only be iOS, I previously had all of them selected. 
-It was causing issues with running the app so I changed it. If we wanna change it back just run flutterfire configure in terminal and choose this project, then override old changes
+PURPOSE OF APP
+The purpose of our app is to foster community among people nearby eachother, like on college campuses, with similar music taste.  
 
-# Resources
+ABOUT THIS APP
+Attune addresses the difficulty of finding people with shared music taste in real life. After linking your Spotify account, Attune reads your top artists, tracks, and genres, then uses your location to surface nearby users with overlapping taste. You can view other users' profiles and send friend requests.
+
+
+HOW TO BUILD AND RUN THE APP
+To build & run the app, open the project in vscode and either run flutter run -d macos OR flutter run with the target being your phone (either wirelessly connected or connected via a cable to your machine). Once the build builds and the app launches, how to sign in should be obvious. Unfortunately, the amount of issues we ran into when trying to configure the app for other platforms would take more time to figure out than we had available to us when working on this project. 
+
+
+REQUIREMENTS
+A spotify account that you can log into (doesn't necessarily have to be yours)
+An iPhone OR mac computer
+Enabled location sharing (when prompted) for the sake of seeing what the app is meant to do
+
+
+PROJECT LAYOUT/STRUCTURE
+
+lib/models/
+user_model.dart --> the user object, contains relevant user data like email, password, coordinates, etc
+
+lib/providers/
+auth_provider.dart --> manages authentication state, spotify data, and friend requests
+position_provider.dart --> 
+
+lib/services/
+auth_service.dart -->
+spotify_auth.dart -->
+
+lib/screens/
+login_screen.dart
+signup_screen.dart
+home_screen.dart
+main_screen.dart --> 
+profile_screen.dart
+spotify_connect_screen.dart 
+
+lib/widgets/
+monster_painter.dart --> this is a little monster logo that we made using Paint, he shows up when your  location services aren't enabled to keep you company since you're all alone in your music taste 
+
+API keys
+SPOTIFY_CLIENT_ID=74011935005a418aa5e108378878ce8a
+SPOTIFY_REDIRECT_URI=attune://callback
+
+
+# Resources 
 
 CONSULTED: 
 firebase.google.com/docs/firestore/data-model
@@ -82,10 +125,7 @@ since so much of the app relies on this being enabled but we also needed to hand
 CONSULTED: 
 https://api.flutter.dev/flutter/widgets/State/didChangeDependencies.html
 REFLECTION:
-Google told me this would help with having stuff happen in my build class before and after dependency changes 
-?????????
-??????
-???
+Google told me this would help with having stuff happen in my build class before and after dependency changes, so I used it 
 
 CONSULTED: 
 REFLECTION:
