@@ -1,0 +1,4 @@
+# Addressing a Human Need
+
+Student loneliness at college is no joke. That's why we wanted to make an app that connects you with people nearby and starts you off with a strong common interest - just about everyone listens to music. 
+Existing social platforms like Spotify and AirBudz let you follow friends you already have, but offer no way to find new ones. Attune addresses this issue by syncing your Spotify listening history, and giving you a way to find nearby users with overlapping taste. Our app provides a low-pressure, interest-first way to find community in your immediate surroundings, though we designed the app with use on college campuses in mind. A shared favorite artist can become a reason to reach out, have someone to stream a new album with, or even find a concert buddy, rather than just staying a coincidence you'd probably never know about otherwise. 
