@@ -227,13 +227,13 @@ abstract class AppLocalizations {
   /// No description provided for @locationDisabled.
   ///
   /// In en, this message translates to:
-  /// **'Location services are disabled.'**
+  /// **'Enable location sharing to see other users near you'**
   String get locationDisabled;
 
   /// No description provided for @allAlone.
   ///
   /// In en, this message translates to:
-  /// **'No users within 20 miles'**
+  /// **'No users within 20 miles. Make sure location is enabled'**
   String get allAlone;
 
   /// No description provided for @signOut.
@@ -271,6 +271,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Something went wrong. Please try again.'**
   String get somethingWentWrong;
+
+  /// No description provided for @changeName.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Name'**
+  String get changeName;
+
+  /// No description provided for @bio.
+  ///
+  /// In en, this message translates to:
+  /// **'Bio'**
+  String get bio;
+
+  /// No description provided for @unfriend.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfriend'**
+  String get unfriend;
+
+  /// No description provided for @acceptFriendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept friend request'**
+  String get acceptFriendRequest;
+
+  /// No description provided for @declineFriendRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline friend request'**
+  String get declineFriendRequest;
+
+  /// No description provided for @appName.
+  ///
+  /// In en, this message translates to:
+  /// **'attune'**
+  String get appName;
+
+  /// No description provided for @catchphrase.
+  ///
+  /// In en, this message translates to:
+  /// **'find your people through music'**
+  String get catchphrase;
+
+  /// No description provided for @spotifyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect your Spotify to see your top artists, tracks, and find nearby listeners who share your taste.'**
+  String get spotifyDescription;
+
+  /// No description provided for @userTileSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} listens to {artist}. Tap to view profile.'**
+  String userTileSemantics(String name, String artist);
+
+  /// No description provided for @profilePictureSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} profile picture'**
+  String profilePictureSemantics(String name);
+
+  /// No description provided for @trackSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'{track} by {artist}'**
+  String trackSemantics(String track, String artist);
 }
 
 class _AppLocalizationsDelegate

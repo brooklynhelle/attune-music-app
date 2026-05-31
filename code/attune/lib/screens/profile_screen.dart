@@ -41,14 +41,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // pfp, defaults to person icon if no value is given by user
-            CircleAvatar(
-              radius: 60,
-              backgroundImage: auth.currentUser?.pfp != null
-                  ? NetworkImage(auth.currentUser!.pfp!)
-                  : null,
-              child: auth.currentUser?.pfp == null
-                  ? const Icon(Icons.person, size: 30)
-                  : null,
+            Semantics(
+              label: AppLocalizations.of(context)!.profilePictureSemantics(
+                auth.currentUser?.name ?? auth.currentUser?.username ?? '',
+              ),
+              child:CircleAvatar(
+                radius: 60,
+                backgroundImage: auth.currentUser?.pfp != null
+                    ? NetworkImage(auth.currentUser!.pfp!)
+                    : null,
+                child: auth.currentUser?.pfp == null
+                    ? const Icon(Icons.person, size: 30)
+                    : null,
+              ),
             ),
             const SizedBox(height: 12),
             TextField(
@@ -89,21 +94,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // used if user updates name
             TextField(
               onChanged: (value) => _nameInput = value,
-              decoration: const InputDecoration(hintText: 'Change Name'),
+              decoration: InputDecoration(hintText: AppLocalizations.of(context)!.changeName),
             ),
             ElevatedButton(
               onPressed: () => context.read<AuthProvider>().updateName(_nameInput ?? ''),
-              child: const Text('Save'),
+              child: Text(AppLocalizations.of(context)!.save),
             ),
 
             // used if user updates bio
             TextField(
               onChanged: (value) => _bioInput = value,
-              decoration: const InputDecoration(hintText: 'Bio'),
+              decoration: InputDecoration(hintText: AppLocalizations.of(context)!.bio),
             ),
             ElevatedButton(
               onPressed: () => context.read<AuthProvider>().updateBio(_bioInput ?? ''),
-              child: const Text('Save'),
+              child: Text(AppLocalizations.of(context)!.save),
             ),
 
             // friends button
@@ -138,6 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   trailing: IconButton(
                                     icon: const Icon(Icons.person_remove),
+                                    tooltip: AppLocalizations.of(context)!.unfriend,
                                     onPressed: () => context
                                         .read<AuthProvider>()
                                         .removeFriend(users[index].uid),
@@ -195,6 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     children: [
                                       IconButton(
                                         icon: const Icon(Icons.check),
+                                        tooltip: AppLocalizations.of(context)!.acceptFriendRequest,
                                         onPressed: () => context
                                             .read<AuthProvider>()
                                             .acceptFriendRequest(
@@ -203,6 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.close),
+                                        tooltip: AppLocalizations.of(context)!.declineFriendRequest,
                                         onPressed: () => context
                                             .read<AuthProvider>()
                                             .declineFriendRequest(
@@ -241,13 +249,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               itemBuilder: (context, index) {
                 final artist = auth.topArtists[index];
                 return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: artist.imageUrl != null
-                        ? NetworkImage(artist.imageUrl!)
-                        : null,
-                    child: artist.imageUrl == null
-                        ? const Icon(Icons.person)
-                        : null,
+                  leading: Semantics(
+                    label: artist.name,
+                    child: CircleAvatar(
+                      backgroundImage: artist.imageUrl != null
+                          ? NetworkImage(artist.imageUrl!)
+                          : null,
+                      child: artist.imageUrl == null
+                          ? const Icon(Icons.person)
+                          : null,
+                    ),
                   ),
                   title: Text(
                     artist.name,
@@ -274,13 +285,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
               itemBuilder: (context, index) {
                 final track = auth.topTracks[index];
                 return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: track.albumImageUrl != null
-                        ? NetworkImage(track.albumImageUrl!)
-                        : null,
-                    child: track.albumImageUrl == null
-                        ? const Icon(Icons.person)
-                        : null,
+                  leading: Semantics(
+                    label: AppLocalizations.of(context)!.trackSemantics(track.name, track.artistName),
+                    child: CircleAvatar(
+                      backgroundImage: track.albumImageUrl != null
+                          ? NetworkImage(track.albumImageUrl!)
+                          : null,
+                      child: track.albumImageUrl == null
+                          ? const Icon(Icons.person)
+                          : null,
+                    ),
                   ),
                   title: Text(
                     track.name,

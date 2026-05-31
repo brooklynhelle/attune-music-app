@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.of(context).popUntil((route) => route.isFirst);
     }
 
-    // if the login failed & the wigdet is still on the screen, let user know and try again
+    // if the login failed & the widget is still on the screen, let user know and try again
     if (!success && mounted) {
       setState(() {
         _errorMessage = AppLocalizations.of(context)!.loginFailed;
@@ -106,5 +106,3 @@ class _LoginScreenState extends State<LoginScreen> {
     
   }
 }
-
-  

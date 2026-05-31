@@ -44,11 +44,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // pfp
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: widget.user.pfp != null ? NetworkImage(widget.user.pfp!) : null,
-              child: widget.user.pfp == null ? const Icon(Icons.person) : null,
+            Semantics(
+              label: AppLocalizations.of(context)!.profilePictureSemantics(
+                widget.user.name ?? widget.user.username,
+              ),
+              // pfp
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: widget.user.pfp != null ? NetworkImage(widget.user.pfp!) : null,
+                child: widget.user.pfp == null ? const Icon(Icons.person) : null,
+              ),
             ),
             const SizedBox(height: 20),
 
@@ -68,16 +73,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             const SizedBox(height: 15),
 
             // button to send friend request
-            ElevatedButton(
-              onPressed: isFriend || _friendRequestSent ? null : () {
-                context.read<AuthProvider>().sendFriendRequest(widget.user.uid);
-                setState(() => _friendRequestSent = true);
-              },
-              child: Text(isFriend
-                ? AppLocalizations.of(context)!.friends
-                : _friendRequestSent
-                  ? AppLocalizations.of(context)!.requestSent
-                  : AppLocalizations.of(context)!.sendFriendRequest),
+            Semantics(
+              button: true,
+              child: ElevatedButton(
+                onPressed: isFriend || _friendRequestSent ? null : () {
+                  context.read<AuthProvider>().sendFriendRequest(widget.user.uid);
+                  setState(() => _friendRequestSent = true);
+                },
+                child: Text(isFriend
+                  ? AppLocalizations.of(context)!.friends
+                  : _friendRequestSent
+                    ? AppLocalizations.of(context)!.requestSent
+                    : AppLocalizations.of(context)!.sendFriendRequest),
+              ),
             ),
             
             const SizedBox(height: 20),

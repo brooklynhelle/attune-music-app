@@ -42,7 +42,7 @@ class UserModel {
   // the user's friend requests
   List<String> friendRequests;
 
-  // constructs a user with the given info (do i have to list out all the fields?)
+  // constructs a user with the given info
   UserModel({
     required this.uid,
     required this.username,
@@ -67,7 +67,6 @@ class UserModel {
       'name': name,
       'bio': bio,
       'pfp': pfp,
-      // 'uid': uid, // this will become the DOC ID, shouldnt be here
       'topGenres': topGenres,
       'topArtists': topArtists,
       'spotifyId': spotifyId,

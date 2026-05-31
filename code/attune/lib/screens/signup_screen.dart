@@ -52,14 +52,14 @@ class _SignupScreenState extends State<SignupScreen> {
       try {
         await context.read<PositionProvider>().determinePosition();
       } catch (e) {
-        // so the app doesnt crash if user denies permissions
+        // so the app doesn't crash if user denies permissions
       }
       // navigate back to root for redirect
       if (mounted) {
         Navigator.of(context).popUntil((route) => route.isFirst);
       }
     }
-    // if the sign up failed & the wigdet is still on the screen, let user know and try again
+    // if the sign up failed & the widget is still on the screen, let user know and try again
     if (user == null && mounted) { // mounted == widget is still on screen (safety check)
       setState(() {
         _errorMessage = AppLocalizations.of(context)!.signupFailed;
@@ -127,5 +127,3 @@ class _SignupScreenState extends State<SignupScreen> {
     
   }
 }
-
-  
