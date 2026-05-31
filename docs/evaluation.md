@@ -18,7 +18,7 @@ Tester #1
 20 year old female
 
 a) 5
-b) 5
+b) 1
 c) 5
 d) 1
 e) 5
@@ -43,5 +43,29 @@ i) 5
 j) 1
 
 Tester #3
+70 year old male
+
+a) 5
+b) 1
+c) 5
+d) 1
+e) 5
+f) 1
+g) 5
+h) 1
+i) 5
+j) 1
 
 Tester #4
+35 year old they
+
+a) 5
+b) 1
+c) 5
+d) 1
+e) 5
+f) 1
+g) 5
+h) 1
+i) 3
+j) 1
