@@ -123,8 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
       return Center(child: CircularProgressIndicator()); // classic
     } else if (user?.latitude == null) {
       return Center(
-        
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Semantics(
               label: AppLocalizations.of(context)!.locationDisabled,
@@ -134,9 +134,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
               const SizedBox(height: 20),
-              Text(
-                AppLocalizations.of(context)!.locationDisabled,
-                style: const TextStyle(fontSize: 18),
+              Center(
+                child: Text(
+                  AppLocalizations.of(context)!.locationDisabled,
+                  style: const TextStyle(fontSize: 18),
+                ),
               ),
             ],
           ),
@@ -144,6 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else if (_nearbyUsers.isEmpty) {
         return Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Semantics(
                 label: AppLocalizations.of(context)!.allAlone,
@@ -153,9 +156,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             const SizedBox(height: 20),
-            Text(
-              AppLocalizations.of(context)!.allAlone,
-              style: const TextStyle(fontSize: 18),
+            Center(
+              child: Text(
+                AppLocalizations.of(context)!.allAlone,
+                style: const TextStyle(fontSize: 18),
+              ),
             ),
           ],
         ),
