@@ -1,31 +1,59 @@
 {
-    "signIn": "Iniciar sesión",
-    "email": "Correo electrónico",
-    "password": "Contraseña",
-    "loginFailed": "Error al iniciar sesión, verifica tu correo y contraseña",
-    "signUp": "Registrarse",
-    "username": "Nombre de usuario",
-    "alreadyHaveAccount": "¿Ya tienes una cuenta? Inicia sesión",
-    "noAccount": "¿No tienes una cuenta? Regístrate aquí",
-    "signupFailed": "No se pudo crear la cuenta, inténtalo de nuevo",
-    "topArtists": "Artistas favoritos",
-    "topTracks": "Canciones favoritas",
-    "topGenres": "Géneros favoritos",
-    "sendFriendRequest": "Enviar solicitud de amistad",
-    "friends": "Amigos",
-    "friendRequests": "Solicitudes de amistad",
-    "save": "Guardar",
-    "noFriendsYet": "Aún no tienes amigos",
-    "noFriendRequests": "No hay solicitudes de amistad",
-    "profilePictureUrl": "URL de foto de perfil",
-    "errorLoadingUsers": "Error al cargar usuarios cercanos: ",
-    "nearby": "Cerca: ",
-    "locationDisabled": "Activa la ubicación para ver usuarios cercanos",
-    "allAlone": "No hay usuarios en un radio de 20 millas",
-    "signOut": "Cerrar sesión",
-    "requestSent": "Solicitud enviada",
-    "home": "Inicio",
-    "profile": "Perfil",
-    "connectSpotify": "Conectar Spotify",
-    "somethingWentWrong": "Algo salió mal. Inténtalo de nuevo."
+  "signIn": "Iniciar sesión",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "loginFailed": "Error al iniciar sesión, verifica tu correo y contraseña",
+  "signUp": "Registrarse",
+  "username": "Nombre de usuario",
+  "alreadyHaveAccount": "¿Ya tienes una cuenta? Inicia sesión",
+  "noAccount": "¿No tienes una cuenta? Regístrate aquí",
+  "signupFailed": "No se pudo crear la cuenta, inténtalo de nuevo",
+  "topArtists": "Artistas favoritos",
+  "topTracks": "Canciones favoritas",
+  "topGenres": "Géneros favoritos",
+  "sendFriendRequest": "Enviar solicitud de amistad",
+  "friends": "Amigos",
+  "friendRequests": "Solicitudes de amistad",
+  "save": "Guardar",
+  "noFriendsYet": "Aún no tienes amigos",
+  "noFriendRequests": "No hay solicitudes de amistad",
+  "profilePictureUrl": "URL de foto de perfil",
+  "errorLoadingUsers": "Error al cargar usuarios cercanos: ",
+  "nearby": "Cerca: ",
+  "locationDisabled": "Activa la ubicación para ver usuarios cercanos",
+  "allAlone": "No se encontraron usuarios cercanos. Asegúrate de que la ubicación esté activada.",
+  "signOut": "Cerrar sesión",
+  "requestSent": "Solicitud enviada",
+  "home": "Inicio",
+  "profile": "Perfil",
+  "connectSpotify": "Conectar Spotify",
+  "somethingWentWrong": "Algo salió mal. Inténtalo de nuevo.",
+  "changeName": "Cambiar nombre",
+  "bio": "Biografía",
+  "unfriend": "Eliminar amigo",
+  "acceptFriendRequest": "Aceptar solicitud de amistad",
+  "declineFriendRequest": "Rechazar solicitud de amistad",
+  "appName": "attune",
+  "catchphrase": "encuentra a tu gente a través de la música",
+  "spotifyDescription": "Conecta tu Spotify para ver tus artistas y canciones favoritas, y encuentra oyentes cercanos con tus mismos gustos.",
+  "userTileSemantics": "{name} escucha {artist}. Toca para ver el perfil.",
+  "@userTileSemantics": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "artist": {"type": "String"}
+    }
+  },
+  "profilePictureSemantics": "Foto de perfil de {name}",
+  "@profilePictureSemantics": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "trackSemantics": "{track} de {artist}",
+  "@trackSemantics": {
+    "placeholders": {
+      "track": {"type": "String"},
+      "artist": {"type": "String"}
+    }
   }
+}

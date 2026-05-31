@@ -77,7 +77,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'Activa la ubicación para ver usuarios cercanos';
 
   @override
-  String get allAlone => 'No hay usuarios en un radio de 20 millas';
+  String get allAlone =>
+      'No se encontraron usuarios cercanos. Asegúrate de que la ubicación esté activada.';
 
   @override
   String get signOut => 'Cerrar sesión';
@@ -96,4 +97,44 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get somethingWentWrong => 'Algo salió mal. Inténtalo de nuevo.';
+
+  @override
+  String get changeName => 'Cambiar nombre';
+
+  @override
+  String get bio => 'Biografía';
+
+  @override
+  String get unfriend => 'Eliminar amigo';
+
+  @override
+  String get acceptFriendRequest => 'Aceptar solicitud de amistad';
+
+  @override
+  String get declineFriendRequest => 'Rechazar solicitud de amistad';
+
+  @override
+  String get appName => 'attune';
+
+  @override
+  String get catchphrase => 'encuentra a tu gente a través de la música';
+
+  @override
+  String get spotifyDescription =>
+      'Conecta tu Spotify para ver tus artistas y canciones favoritas, y encuentra oyentes cercanos con tus mismos gustos.';
+
+  @override
+  String userTileSemantics(String name, String artist) {
+    return '$name escucha $artist. Toca para ver el perfil.';
+  }
+
+  @override
+  String profilePictureSemantics(String name) {
+    return 'Foto de perfil de $name';
+  }
+
+  @override
+  String trackSemantics(String track, String artist) {
+    return '$track de $artist';
+  }
 }

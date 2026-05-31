@@ -21,13 +21,39 @@
   "errorLoadingUsers": "Error loading nearby users: ",
   "nearby": "Nearby: ",
   "locationDisabled": "Enable location sharing to see other users near you",
-  "allAlone": "No users within 20 miles",
+  "allAlone": "No users within 20 miles. Make sure location is enabled",
   "signOut": "Sign out",
   "requestSent": "Request Sent",
-  "locationDisabled": "Location services are disabled.",
   "home": "Home",
   "profile": "Profile",
   "connectSpotify": "Connect Spotify",
   "somethingWentWrong": "Something went wrong. Please try again.",
-  "signOut": "Sign out"
+  "changeName": "Change Name",
+  "bio": "Bio",
+  "unfriend": "Unfriend",
+  "acceptFriendRequest": "Accept friend request",
+  "declineFriendRequest": "Decline friend request",
+  "appName": "attune",
+  "catchphrase": "find your people through music",
+  "spotifyDescription": "Connect your Spotify to see your top artists, tracks, and find nearby listeners who share your taste.",
+  "userTileSemantics": "{name} listens to {artist}. Tap to view profile.",
+  "@userTileSemantics": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "artist": {"type": "String"}
+    }
+  },
+  "profilePictureSemantics": "{name} profile picture",
+  "@profilePictureSemantics": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "trackSemantics": "{track} by {artist}",
+  "@trackSemantics": {
+    "placeholders": {
+      "track": {"type": "String"},
+      "artist": {"type": "String"}
+    }
+  }
 }

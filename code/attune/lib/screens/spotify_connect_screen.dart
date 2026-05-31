@@ -24,8 +24,8 @@ class SpotifyConnectScreen extends StatelessWidget {
               const Spacer(flex: 2),
 
               // app name
-              const Text(
-                'attune',
+              Text(
+                AppLocalizations.of(context)!.appName,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 48,
@@ -37,8 +37,8 @@ class SpotifyConnectScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               // lil catch phrase
-              const Text(
-                'find your people through music',
+              Text(
+                AppLocalizations.of(context)!.catchphrase,
                 style: TextStyle(
                   color: Color(0xFF888888),
                   fontSize: 18,
@@ -50,28 +50,31 @@ class SpotifyConnectScreen extends StatelessWidget {
               const Spacer(flex: 2),
 
               // icon
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: const Color(0xFF1DB954),
-                    width: 1.5,
+              Semantics(
+                label: AppLocalizations.of(context)!.connectSpotify,
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: const Color(0xFF1DB954),
+                      width: 1.5,
+                    ),
                   ),
-                ),
-                child: const Icon(
-                  Icons.music_note,
-                  color: Color(0xFF1DB954),
-                  size: 36,
+                  child: const Icon(
+                    Icons.music_note,
+                    color: Color(0xFF1DB954),
+                    size: 36,
+                  ),
                 ),
               ),
 
               const SizedBox(height: 40),
 
               // description
-              const Text(
-                'Connect your Spotify to see your top artists, tracks, and find nearby listeners who share your taste.',
+              Text(
+                AppLocalizations.of(context)!.spotifyDescription,
                 style: TextStyle(
                   color: Color(0xFFAAAAAA),
                   fontSize: 18,
@@ -99,16 +102,7 @@ class SpotifyConnectScreen extends StatelessWidget {
                     ),
                     elevation: 0,
                   ),
-                  child: auth.dataLoading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.black,
-                          ),
-                        )
-                      : Text(
+                  child: Text(
                           AppLocalizations.of(context)!.connectSpotify,
                           style: TextStyle(
                             fontSize: 20,

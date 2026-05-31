@@ -73,10 +73,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nearby => 'Nearby: ';
 
   @override
-  String get locationDisabled => 'Location services are disabled.';
+  String get locationDisabled =>
+      'Enable location sharing to see other users near you';
 
   @override
-  String get allAlone => 'No users within 20 miles';
+  String get allAlone =>
+      'No users within 20 miles. Make sure location is enabled';
 
   @override
   String get signOut => 'Sign out';
@@ -95,4 +97,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get somethingWentWrong => 'Something went wrong. Please try again.';
+
+  @override
+  String get changeName => 'Change Name';
+
+  @override
+  String get bio => 'Bio';
+
+  @override
+  String get unfriend => 'Unfriend';
+
+  @override
+  String get acceptFriendRequest => 'Accept friend request';
+
+  @override
+  String get declineFriendRequest => 'Decline friend request';
+
+  @override
+  String get appName => 'attune';
+
+  @override
+  String get catchphrase => 'find your people through music';
+
+  @override
+  String get spotifyDescription =>
+      'Connect your Spotify to see your top artists, tracks, and find nearby listeners who share your taste.';
+
+  @override
+  String userTileSemantics(String name, String artist) {
+    return '$name listens to $artist. Tap to view profile.';
+  }
+
+  @override
+  String profilePictureSemantics(String name) {
+    return '$name profile picture';
+  }
+
+  @override
+  String trackSemantics(String track, String artist) {
+    return '$track by $artist';
+  }
 }

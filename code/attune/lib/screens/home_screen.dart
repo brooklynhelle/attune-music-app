@@ -41,9 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // loads nearby users within 20 miles of current user, given location is shared
-  // I THINK all the possible failures/errors are handled... check my work please dear partner...
+  // returns early if location is unavailable
   Future<void> _loadNearbyUsers() async {
-    // apparently you have to use context.read instead of context.watch since we're not in a builder
+    // you have to use context.read instead of context.watch since we're not in a builder
     final auth = context.read<AuthProvider>();
     final user = auth.currentUser;
 
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
     catch (e) {
       setState(
         () => _loading = false,
-      ); // if we add a loading spinner this stops it
+      ); // stops loading if there's an error
     }
   }
 
@@ -126,26 +126,32 @@ class _HomeScreenState extends State<HomeScreen> {
         
         child: Column(
           children: [
-            CustomPaint(
-              size: Size(300, 300),
-              painter: MonsterPainter(),
+            Semantics(
+              label: AppLocalizations.of(context)!.locationDisabled,
+              child:CustomPaint(
+                size: Size(300, 300),
+                painter: MonsterPainter(),
+              ),
             ),
-            const SizedBox(height: 20),
-            Text(
-              AppLocalizations.of(context)!.locationDisabled,
-              style: const TextStyle(fontSize: 18),
-            ),
-          ],
-        ),
-      );
-    } else if (_nearbyUsers.isEmpty) {
-      return Center(
-        child: Column(
-          children: [
-            CustomPaint(
-              size: Size(200, 200),
-              painter: MonsterPainter(),
-            ),
+              const SizedBox(height: 20),
+              Text(
+                AppLocalizations.of(context)!.locationDisabled,
+                style: const TextStyle(fontSize: 18),
+              ),
+            ],
+          ),
+        );
+      } else if (_nearbyUsers.isEmpty) {
+        return Center(
+          child: Column(
+            children: [
+              Semantics(
+                label: AppLocalizations.of(context)!.allAlone,
+                child:CustomPaint(
+                  size: Size(200, 200),
+                  painter: MonsterPainter(),
+                ),
+              ),
             const SizedBox(height: 20),
             Text(
               AppLocalizations.of(context)!.allAlone,
@@ -162,12 +168,25 @@ class _HomeScreenState extends State<HomeScreen> {
           itemBuilder: (context, index) {
             // list of homies
             final nearbyUser = _nearbyUsers[index];
-            return ListTile(
-              leading: CircleAvatar(
-                backgroundImage: nearbyUser.pfp != null
-                    ? NetworkImage(nearbyUser.pfp!)
-                    : null,
-                child: nearbyUser.pfp == null ? const Icon(Icons.person) : null,
+            return Semantics(
+              label: AppLocalizations.of(context)!.userTileSemantics(
+                nearbyUser.name?? nearbyUser.username,
+                nearbyUser.topArtists.isNotEmpty
+                  ? nearbyUser.topArtists.first
+                  : 'unknown',
+              ),
+              button: true,
+              child: ListTile(
+              leading: Semantics(
+                label: AppLocalizations.of(context)!.profilePictureSemantics(
+                  nearbyUser.name ?? nearbyUser.username,
+                ),
+                child: CircleAvatar(
+                  backgroundImage: nearbyUser.pfp != null
+                      ? NetworkImage(nearbyUser.pfp!)
+                      : null,
+                  child: nearbyUser.pfp == null ? const Icon(Icons.person) : null,
+                ),
               ),
               title: Text(
                 nearbyUser.name ?? nearbyUser.username,
@@ -184,6 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 MaterialPageRoute(
                   builder: (_) => UserProfileScreen(user: nearbyUser),
                 ),
+              ),
               ),
             );
           },
