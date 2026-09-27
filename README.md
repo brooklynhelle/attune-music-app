@@ -59,7 +59,6 @@ lib/l10n/
 contains internationalization strings for all text seen by users, our app supports English and Spanish. 
 
 API keys
-SPOTIFY_CLIENT_ID=(this is in .env file)
-SPOTIFY_REDIRECT_URI=attune://callback
-this is also in the .env file which should be submitted with everything else/accessible on github
+This project requires a .env file with SPOTIFY_CLIENT_ID and SPOTIFY_REDIRECT_URI. 
+Do not commit your .env file — it's excluded via .gitignore.
 
